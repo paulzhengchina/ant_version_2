@@ -1,0 +1,271 @@
+@charset "utf-8";
+/* CSS Document */
+
+/********************************************start reset.css *************************************************************************************/
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+/******************************************** End reset.css ***************************************************************************************/
+
+/******************************************* Start dropdown-behavior.css **************************************************************************/
+/* first level */
+ul.menu {
+	float: left;
+	width: 100%;
+	z-index:1;
+}
+
+ul.menu li {
+	position: static;
+	float: left;
+	z-index:2;
+}
+
+ul.menu li a {
+	display: block;
+	clear: both;
+	position: relative;
+	z-index:2;
+}
+
+/* second level */
+ul.menu .submenu {
+	position: absolute;
+	float: none;				
+	white-space: nowrap;
+	z-index:2;
+}
+
+/* submenu markup */
+
+/* third level */
+ul.menu .submenu .submenu {
+	top: 0;
+	left: 100%;
+	z-index:2;
+}
+
+/* show hide behaviour */
+ul.menu .submenu {
+	display: none;
+	z-index:2;
+}
+
+ul.menu li.hover,
+ul.menu li:hover {
+	position: relative;
+	z-index:2;
+}
+
+ul.menu li.hover .submenu,
+ul.menu li:hover .submenu {
+	position: absolute;
+	display: block;
+	z-index: 2000;
+	z-index:2;
+}
+
+ul.menu li.hover .submenu .submenu,
+ul.menu li:hover .submenu .submenu {
+	display: none !important;
+}
+
+ul.menu .submenu li.hover .submenu,
+ul.menu .submenu li:hover .submenu {
+	display: block !important;
+	z-index: 2000;
+	z-index:2;
+}
+
+* html ul.menu .submenu {
+	position: absolute;
+	z-index:2;
+}
+
+* html ul.menu .submenu .submenu {
+	position: absolute;
+	z-index:2;
+}
+
+a:link {color:#000;text-decoration:none;}
+a:visited {color:#000;text-decoration:none;}
+a:hover {color:#FF0000;text-decoration:underline;}
+ul{list-style-type:none;}
+OL,DL {margin-bottom:1px;}
+OL,DL,DT,DD {line-height:14px;}
+DD {margin-bottom:.5em;}
+#navigation{width:760px;}
+/******************************************* End dropdown-behavior.css ****************************************************************************/
+
+/******************************************* start master3.css ****************************************************************************/
+/*
+
+	ie6 hacks are preceded by 
+	* html {}
+*/
+TD, H1, H2, H3, H4, OL, UL, DL, LI, DT, DD {font-family:arial, helvetica, sans-serif;}
+TD, CODE, KBD, TT, OL, UL, DL, LI, DT, DD {	font-size:12px;}
+CODE, KBD, TT {font-family:courier, "courier new", monaco;color:#666;}
+
+
+.navigation_style {
+	margin-top:22px;
+	margin-left:10px;
+	float:left;
+}
+ul#navigation { font-family: Arial; font-size: 12px; font-weight: bold; height: 43px; min-width: 760px; position: relative; z-index:50; }
+ul#navigation li,
+ul#navigation li p,
+ul#navigation li p a { float: left; height: 100%; *height:43px;	}
+ul#navigation li a { padding: 0 20px; text-decoration: none; color: #000; }
+ul#navigation li p a:hover span { color:#ff0000; }
+ul#navigation li#left_cap p a {background:none; padding: 12px 5px 0 5px;}
+ul#navigation li.top-level p a { height: 27px; background:url(../images/subnav_btn.gif) right 20px no-repeat; padding: 12px 15px 0 5px; }
+ul#navigation li.top-level p a.noimg {background:none;}
+ul#navigation li.top-level p a:hover { color:#FF0000; text-decoration:underline; background-position:right -10px; }
+ul#navigation li.top-level p span { height: auto; margin: 0 !important;  padding-bottom: 12px;}
+ul#navigation li.special { float: right; }
+ul#navigation a { text-decoration: none; }
+ul#navigation li.special a { border: none; }
+ul#navigation li p a span { display: block; text-align: center; font-size:16px; }
+ul#navigation li { background: transparent url(../images/navigation-item-background.png) left bottom repeat-x;padding:0 10px; }
+ul#navigation li.special.last,
+ul#navigation li.special:last-child { background: none; }
+
+ul#navigation li.first.active,
+ul#navigation li.active:first-child,
+ul#navigation li.hover,
+ul#navigation li:hover { background-position: left top; background-color: #fff; border-left:1px solid #ababab; border-right:1px solid #ababab; }
+.greydivider{margin-top:-10px;margin-bottom:-10px;} 
+
+/*second level*/
+ul#navigation div.submenu li,
+ul#navigation div.submenu li p,
+ul#navigation div.submenu li p a { float: none; border: none !important; }
+ul#navigation div.submenu { background:url(../images/nav_down_bg.png) repeat-x #fff; margin-top: 39px; border: 1px solid #b7b7b7; border-top: none; font-weight: normal; margin-left: -1px; min-width: 150px; max-width: 300px; top: 0; left: 0; z-index: 1000;  border-bottom:0px;}
+ul#navigation div.submenu .bottomleft{  background:url(../images/flyout-shadow-left.png) left top no-repeat; width:15px; height:30px; position:relative; float:left; margin-left:-16px; margin-bottom:-43px; clear:both; margin-top:15px;}
+ul#navigation div.submenu .bottomcenter{  background:url(../images/flyout-shadow-bg.png) left top repeat-x; width:242px; height:30px; position:absolute; margin-left:15px;  float:center;}
+ul#navigation div.submenu .bottomright{  background:url(../images/flyout-shadow-right.png) left top no-repeat; width:15px; height:30px; position:relative; float:right; margin-right:-15px;}
+ul#navigation div.submenu .threebottomcenter{  background:url(../images/flyout-shadow-bg.png) left top repeat-x; width:355px; height:30px; position:absolute; margin-left:15px;  float:center;}
+ul#navigation div.submenu .fourbottomcenter{  background:url(../images/flyout-shadow-bg.png) left top repeat-x; width:474px; height:30px; position:absolute; margin-left:15px;  float:center;}
+*ul#navigation div.submenu .threebottomcenter{background:none; height:30px;  margin-left:15px; margin-right:15px; float:left; width:565px;}
+*ul#navigation div.submenu .fourbottomcenter{background:none; height:30px;  margin-left:15px; margin-right:15px; float:left; width:742px;} 
+/* End code*/
+/* Sub menu Bottom Fly Out */
+ul#navigation div.submenuhead {width:184px; float:right; *clear:both;}
+ul#navigation div.submenuhead .submen {width:184px; font:12px; color:#000000; font-family:Arial, Helvetica, sans-serif;}
+ul#navigation div.submenuhead .submen span {width:184px;  line-height:20px; padding-left:5px; margin-top:0px; margin-bottom:0px; height:22px; background:url(../images/whatsnew-header.png) no-repeat; color:#ffffff; display:block;font-weight:bold; border:0px;}
+ul#navigation div.submenuhead dl{border-left: 1px solid #ddd;border-right: 1px solid #ddd;padding-bottom:6px;}
+ul#navigation div.submenuhead dd a img {margin-left:-12px;}
+ul#navigation div.submenuhead dd{margin-left:10px;}
+ul#navigation div.submenuhead dd:first-child{padding-top:10px;}
+ul#navigation div.submenuhead .subbottomcenter{background:url(../images/whatsnew-bottom.png) left bottom no-repeat ; width:184px;height:8px; position:relative; padding-top:5px;margin-left:-1px;*padding-top:0px; *margin-left:-21px;  float:left;}
+/* End code*/
+
+ul#navigation div.submenu * { background: none; }
+ul#navigation div.submenu a { border: none; display: block; }
+ul#navigation div.submenu li.hover,
+ul#navigation div.submenu li:hover { background: #b7b7b7; }
+ul#navigation div.submenu li.hover a,
+ul#navigation div.submenu li:hover a { color: #fff; }
+ul#navigation div.submenu li.hover ul *,
+ul#navigation div.submenu li:hover ul * { color: #000 !important; }
+ul#navigation div.submenu li { height: 15px; line-height: 5px; display: block; float: left; clear: left; width: 100%; }
+ul#navigation li.top-level div.submenu { padding: 15px; max-width: none; opacity:0.95;filter:alpha(opacity=95);}
+ul#navigation li.top-level div.submenu.two-columns { width: 240px; }
+ul#navigation li.top-level div.submenu.three-columns { width: 353px; }
+ul#navigation li.top-level div.submenu.four-columns { width: 472px; }
+ul#navigation li.top-level div.submenu.anchor-right { left: auto; right: -1px; }
+
+ul#navigation li.top-level div.submenu div.left-column { width: 105px; height:60px; float: left; border-right: 0px solid #ddd; padding: 3px 0 0 5px; }
+ul#navigation li.top-level div.submenu div.right-column { width: 105px; float: left; padding: 3px 0 0 5px;  border-left: 0px solid #ddd; margin-left:-1px; _clear:right;}
+ul#navigation li.top-level div.submenu div.center-colnoborder { width:105px; float:left; padding: 3px 0 0 5px; margin-left:-1px; _clear:right; }
+ul#navigation li.top-level div.submenu div.right-colnoborder { width: 105px; float: left; padding: 3px 0 0 5px;  margin-left:-1px; _clear:right;}
+ul#navigation li.top-level div.submenu div.last-column { width: 105px; float: left; padding: 3px 0 0 5px;  margin-left:-1px; _clear:right;}
+ul#navigation li.top-level div.submenu dl { font-size: 11px; margin: 0 0 0px; }
+ul#navigation li.top-level div.submenu dl:last-child { margin: 0; }
+ul#navigation li.top-level div.submenu dl dt { font-size: 12px; font-weight: bold; margin: 0 0 8px; }
+ul#navigation li.top-level div.submenu dl dt a { padding: 0; }
+ul#navigation li.top-level div.submenu dl dt a:hover { text-decoration: underline; color:#F00;  }
+ul#navigation li.top-level div.submenu dl dd { font-size: 14px; line-height: 13px; text-indent:0px; text-align:center}
+ul#navigation li.top-level div.submenu dl dd a { padding: 0; }
+ul#navigation li.top-level div.submenu dl dd a:hover { text-decoration: underline; color:#F00; }
+ul#navigation li.top-level div.submenu dl dd a.more { color: #999; }
+ul#navigation li.top-level div.submenu dl dd:last-child { margin-bottom:0; }
+ul#navigation li.top-level div.submenu dl dd{margin-bottom:expression(this.nextSibling == null ? "20px" : "inherit");}
+
+/* Partner Bottom Fly Out */
+ul#navigation div.submenu .partner_bottomleft{ background:url(../images/partnerbottom-left.png) left top no-repeat; width:15px; height:30px;  float:left; margin-left:-16px; margin-bottom:-43px; clear:left; margin-top:15px;}
+ul#navigation div.submenu .partner_bottomcenter{  background:url(../images/partnerbottom-center.png) left top repeat-x; width:382px; height:30px; margin-left:15px;  float:center;}
+ul#navigation div.submenu .partner_bottomright{  background:url(../images/partnerbottom-right.png) left top no-repeat; width:15px; height:30px; float:right; margin-right:-15px;}
+.lock {position:absolute; top:1px;*top:0px; left:152px; margin:0px; padding:0px;}
+
+/* End Partner Bottom Fly Out */
+ul#navigation li.top-level div.submenu dl dd a:link .seeAll  {font-size:11px; color:#666666; }
+ul#navigation li.top-level div.submenu dl dd a:visited .seeAll {font-size:11px; color:#666666; }
+ul#navigation li.top-level div.submenu dl dd a:hover .seeAll {font-size:11px; color:#F00; }
+ul#navigation li.top-level div.submenu dl dd a:active .seeAll {font-size:11px; color:#F00; }
+
+/* Oracle Technology Network Dropdown */
+ul#navigation li#oracleTechNetwork { position: absolute; top: 7px; right: 9px; background:url(../images/navigation-pill.png) no-repeat; width: 180px; height: 26px; }
+ul#navigation li#oracleTechNetwork p { font-size: 11px; float: none;  padding-right:15px; }
+ul#navigation li#oracleTechNetwork p a{ padding: 6px 0 0; display: block; border: 0; text-align: center; width: 100%; }
+ul#navigation li#oracleTechNetwork:hover,
+ul#navigation li#oracleTechNetwork.hover { background-position: 0 -26px; height: 32px; overflow: visible; }
+ul#navigation li#oracleTechNetwork div.submenu { margin-top: 32px; }
+
+/* Horizontal Nav IE6 Fixes */
+* html ul#navigation li#oracleTechNetwork { overflow: hidden; }
+* html ul#navigation li div.submenu { width: auto !important; }
+* html ul#navigation li div.submenu.two-columns { width: 360px !important; }
+* html ul#navigation .submenu li { line-height: 27px; height: 27px; display: block; width: 100%; float: left; clear: both; }
+* html ul#navigation .submenu { width: 280px !important; white-space: normal; }
+
+/* Horizontal Nav IE7 Fixes */
+*:first-child+html ul#navigation .submenu .submenu { white-space: normal; width: 100%; }
+*:first-child+html ul#navigation .submenu li { width: 280px; }
+
+ul#navigation li.top-level div.submenu.two-columns.divider{background:url(../images/partners-flyout-bg.png) #f5f5f5 right top repeat-y;top:215px;width: 380px;}
+* html ul#navigation li.top-level div.submenu.two-columns.divider{background:url(../images/partners-flyout-bg.png) #f5f5f5 right top repeat-y; width: 380px;top:205px; _top:220px;}
+ul#navigation li.top-level div.heading_hornav{background:url(../images/bg-left-cap.gif) left repeat-x;color:#FFF;padding-left:6px;padding-top:6px;font-size:13px;height:24px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; position:absolute; left:0px; top:-2px; width:404px;}
+* html ul#navigation li.top-level div.heading_hornav{background:url(../images/bg-left-cap.gif) left repeat-x;color:#FFF;padding-left:6px;padding-top:4px;font-size:13px;height:24px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; position:absolute; left:0px; top:0px; width:404px; _top:-1px;}
+ul#navigation li.top-level div.heading_hornav span{color:#fff;font-size:12px;}
+ul#navigation li.top-level span.image_right{padding-left:0px;position:absolute;top:15px;left:375px;width:2;height:19px;}
+
+/* First child left cap fix */
+ul#navigation li#left_cap{background: transparent url(../images/navigation-item-background.png) left bottom; padding: 0 10px; height:40px;}
+ul#navigation li#left_cap.hover,
+ul#navigation li#left_cap:hover { background: transparent url(../images/navigation-item-background.png) left top; background-color: #fff;border-left:1px solid #ababab;border-right:1px solid #ababab;}
+/******************************************* End master3.css ****************************************************************************/
+
+/*drop down behavior and functionality*/
+* {	margin: 0;	padding: 0;	list-style: none;}
+a:hover {text-decoration: none;}
+/* first level */
+ul.menu {float: left;width: 100%;z-index:1;}
+ul.menu li {position: static;float: left;z-index:2;}
+ul.menu li a {display: block;clear: both;position: relative;z-index:2;}
+/* second level */
+ul.menu .submenu {position: absolute;float: none;white-space: nowrap;z-index:2;}
+/* submenu markup */
+/* third level */
+ul.menu .submenu .submenu {top: 0;left: 100%;z-index:2;}
+/* show hide behaviour */
+ul.menu .submenu {display: none;z-index:2;}
+ul.menu li.hover,ul.menu li:hover {position: relative;z-index:2;}
+ul.menu li.hover .submenu,ul.menu li:hover .submenu {position: absolute;display: block;	z-index: 2000;z-index:2;}
+ul.menu li.hover .submenu .submenu,ul.menu li:hover .submenu .submenu {display: none !important;}
+ul.menu .submenu li.hover .submenu,ul.menu .submenu li:hover .submenu {display: block !important;z-index: 2000;	z-index:2;}
+* html ul.menu .submenu {position: absolute;z-index:2;}
+* html ul.menu .submenu .submenu {position: absolute;z-index:2;}
+
+a.legalese:link {padding-left:12px; margin:0px;}
+a.legalese:visited {padding-left:12px; margin:0px;}
+
+ul#navigation li.top-level p a.noimg {background:none;}
+.lock {position:absolute; top:1px;*top:1px; left:152px; margin:0px; padding:0px;}
+
+#navigation .login_required {height: 16px; float: left; padding: 4px 0; font-weight: bold; color: #fff;}
+#navigation .divider_bar {clear: both; background: url(http://www.oracle.com/us/assets/bg-left-cap.gif) repeat-x!important; margin: 0 -15px; #width: 400px; padding: 0 0 0 15px;}

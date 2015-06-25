@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "<DTDURL>/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+		
+	<definition name="frontpagetemplete" template="/index.jsp">
+		<put-attribute name="header" value="/frontpage/loadHeader.action"/>
+		<put-attribute name="body" value="/frontpage/loadBody.action"/>
+		<put-attribute name="footer" value="/frame/footer.jsp"/>
+	
+	</definition>
+		
+</tiles-definitions>

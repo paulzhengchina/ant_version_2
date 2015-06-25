@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="story" extends="basic,json-default" namespace="/story">	
+	    		
+		<action name="loadCreateStory" class="storyAction" method="loadCreateStory">
+			<result name="success">/WEB-INF/page/story/createStory.jsp</result>
+		</action>
+		
+		<action name="loadEditStory" class="storyAction" method="loadEditStory">
+			<result name="success">/WEB-INF/page/story/editPage.jsp</result>
+		</action>
+		
+		<action name="showStory" class="storyAction" method="showStory">
+			<result name="success">/WEB-INF/page/story/storyInfoPage.jsp</result>
+		</action>
+		
+		<action name="createStory" class="storyAction" method="createStory">
+			<result name="success" type="redirect">/story/viewStoriesOfProject.action?projectId=${projectId}</result>
+		</action>
+		
+		<action name="updateStory" class="storyAction" method="updateStory">
+			<result name="success" type="redirect">/story/viewStoriesOfProject.action?projectId=${projectId}</result>
+		</action>
+		
+		<action name="deleteStory" class="storyAction" method="deleteStory">
+			<result name="success" type="redirect">/story/viewStoriesOfProject.action?projectId=${projectId}</result>
+		</action>
+		
+	
+		<action name="viewStoriesOfProject" class="storyAction" method="viewStoriesOfProject">
+			<result name="success">/WEB-INF/page/story/storiesOfProject.jsp</result>
+		</action>
+		
+		<action name="updateStoryStatus" class="storyAction" method="updateStoryStatus">
+			<result  type="json">
+			   <param name="includeProperties">
+			        storyStatus	                                               
+	           </param>
+			</result>		
+		</action>
+	</package>
+</struts>	

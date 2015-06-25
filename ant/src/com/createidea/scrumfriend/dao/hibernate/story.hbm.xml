@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.createidea.scrumfriend.to.StoryTo" table="story">
+        <id name="id" type="java.lang.String">
+            <column name="id" length="36" />
+            <generator class="uuid" />
+        </id>
+       
+        <property name="name" type="java.lang.String">
+            <column name="name" />
+        </property>
+        
+        <property name="priority" type="java.lang.Integer">
+            <column name="priority"/>
+        </property>
+        
+        <property name="priorityNum" type="java.lang.Integer" not-null="true">
+            <column name="priority_num"/>
+        </property>
+        
+         <property name="point" type="java.lang.Integer">
+            <column name="point"/>
+         </property>
+         
+         <property name="businessValue" type="java.lang.Integer">
+            <column name="business_value" />
+         </property>
+         
+         <property name="status" type="java.lang.Integer">
+            <column name="status"/>
+         </property>
+         
+         <property name="dod" type="java.lang.String">
+            <column name="dod" length="1024"/>
+         </property>
+         
+         <many-to-one name="project"  class="com.createidea.scrumfriend.to.ProjectTo" lazy="false">
+            <column name="project_id"></column>
+         </many-to-one>
+         
+         <many-to-one name="sprint"  not-found="ignore" class="com.createidea.scrumfriend.to.SprintTo" lazy="false">
+            <column name="sprint_id"></column>
+         </many-to-one>
+         
+         <set name="tasks" cascade="save-update" lazy="false" order-by="title asc"> 
+             <key column="story_id"></key> 
+             <one-to-many class="com.createidea.scrumfriend.to.TaskTo"/> 
+         </set> 
+    </class>
+</hibernate-mapping>

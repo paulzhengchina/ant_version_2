@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="sprint" extends="basic,json-default" namespace="/sprint">
+	    <interceptors>  
+            <interceptor name="authority"  class="com.createidea.scrumfriend.struts.interceptor.AuthorizationInterceptor" />  
+            <interceptor-stack name="customizedStack">  
+                <interceptor-ref name="authority" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="customizedStack" />	
+        
+		<action name="modifySprint" class="sprintAction" method="modifySprint">
+			<result name="success">/WEB-INF/page/sprint/modifySprint.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="updateSprint" class="sprintAction" method="updateSprint">
+			 <result name="success" type="redirect">listSprints.action?projectId=${projectId}</result>
+		</action>
+		
+		<action name="listSprints" class="sprintAction" method="showAllSprintsForProject">
+			<result name="success">/WEB-INF/page/sprint/sprintsPage.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="deleteSprint" class="sprintAction" method="deleteSprint">
+			<result name="success" type="redirect">listSprints.action?projectId=${projectId}</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="createSprint" class="sprintAction" method="createSprint">
+			<result name="success">/WEB-INF/page/sprint/createSprintPage.jsp</result>
+		</action>
+		
+		<action name="saveSprint" class="sprintAction" method="saveSprint">
+			 <result name="success" type="redirect">listSprints.action?projectId=${projectId}</result>
+			 <result name="input">/index.jsp</result>
+		</action>
+			
+		<action name="loadKanban" class="sprintAction" method="loadKanban">
+			<result name="success">/WEB-INF/page/kanban.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="ajaxStoryUpdate" class="sprintAction" method="ajaxStoryUpdate">
+			<result  type="json">
+			     <param name="excludeProperties">
+			                                     storyService,
+	                                             userService,
+	                                             storysByStatus0,
+	                                             storysByStatus1,
+	                                             storysByStatus2,
+	                                             storysByStatus3,
+	                                             box_id,
+	                                             card_id,
+	                                             projectId,
+	                                             sprintService,
+	                                             sprint,
+	                                             sprints,
+	                                             sprintId,
+	                                             statisticsService,
+	                                             tasksOfStory,
+	                                             task,
+	                                             REDIRECT_TO_LoadKanban,
+	                                             fromKanban,
+	                                             storyId,
+	                                             taskService
+	                                                                                     
+	           </param>
+	         
+			</result>				
+		</action>
+		
+		<action name="saveTask" class="sprintAction" method="saveTask">
+			<result  type="json">
+			     <param name="excludeProperties">storyService,
+	                                             userService,
+	                                             storysByStatus0,
+	                                             storysByStatus1,
+	                                             storysByStatus2,
+	                                             storysByStatus3,
+	                                             box_id,
+	                                             card_id,
+	                                             projectId,
+	                                             sprintService,
+	                                             sprint,
+	                                             sprints,
+	                                             sprintId,
+	                                             statisticsService,
+	                                             stories
+	           </param>
+			</result>
+		</action>
+	</package>
+</struts>	

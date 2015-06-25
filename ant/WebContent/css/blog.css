@@ -1,0 +1,108 @@
+@charset "utf-8";
+
+html,body {
+	margin:0;
+	font-family:Microsoft YaHei,arial,helvetica,sans-serif;
+	font-size:14px;
+	color:#000;
+}
+
+hr{
+	margin-top:17px;
+	margin-bottom:0px;
+}
+
+hr.heavy{
+	margin-bottom:10px;
+	border:2px solid #757575;
+	margin-left:-15px;
+}
+
+h2{
+	margin-top:0px;
+}
+h2 a{
+	font-size:22px;
+	color:#1a1a1a;
+}
+
+h3 a{
+	font-size:18px;
+	color:#1a1a1a;
+}
+
+h3{
+	margin-left:130px;
+}
+
+.navbar{
+	height:80px;
+}
+
+.navbar-brand{
+	height:80px;
+}
+
+
+.navbar-nav li a{
+	height:80px;
+	line-height:50px !important;
+}
+
+.main_content{
+	margin-top:50px;
+}
+
+.blogList{
+	
+	padding-right:30px;
+
+}
+.blogList .blog_logo{
+	margin-top:11px;
+}
+.blogList .blog_logo img{
+	width:228px;
+	height:148px;
+	overflow:hidden;
+	float:left;
+}
+.blogList .blog_info{
+	margin-left:243px;
+}
+
+.blog_info .blog_summary{
+	font-size:16px;
+	color:#666666;
+	line-height:20px;
+}
+.blog_info .blog_time{
+	font-size:14px;
+	color:#666666;
+}
+
+.recommendBlogList{
+	padding-left:30px;
+	border-left:1px solid #757575;
+
+}
+
+.recommendBlogList .recommend_list_item {
+	margin-top:10px;
+}
+.recommendBlogList .blog_logo{
+	float:left;
+}
+
+.recommendBlogList .blog_logo img{
+	width:112px;
+	height:74px;
+}
+
+.blog_entity{
+	font-size:16px;
+	letter-spacing:2px
+}
+.blog_entity .summary{
+	color:gray;
+}

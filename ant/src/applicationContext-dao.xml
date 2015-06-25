@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+				
+					org.hibernate.dialect.MySQLDialect
+					<!-- 
+				    org.hibernate.dialect.DerbyDialect
+					  -->
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>
+					classpath:com/createidea/scrumfriend/dao/hibernate
+				</value>
+			</list>
+		</property>
+		
+	</bean>
+	
+	<bean name="baseDao" class="com.createidea.scrumfriend.dao.BaseDaoImpl" abstract="true" >
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean name="userDao" class="com.createidea.scrumfriend.dao.user.UserDaoImpl" parent="baseDao" />
+	<bean name="projectDao" class="com.createidea.scrumfriend.dao.project.ProjectDaoImpl" parent="baseDao" />
+	<bean name="storyDao" class="com.createidea.scrumfriend.dao.story.StoryDaoImpl" parent="baseDao" />
+	<bean name="sprintDao" class="com.createidea.scrumfriend.dao.sprint.SprintDaoImpl" parent="baseDao" />
+	<bean name="taskDao" class="com.createidea.scrumfriend.dao.task.TaskDaoImpl" parent="baseDao" />
+	<bean name="statisticsDao" class="com.createidea.scrumfriend.dao.statistics.StatisticsDaoImpl" parent="baseDao" />
+	<bean name="attachmentDao" class="com.createidea.scrumfriend.dao.attachment.AttachmentDaoImpl" parent="baseDao" />
+	<bean name="blogDao" class="com.createidea.scrumfriend.dao.blog.BlogDaoImpl" parent="baseDao" />
+	<bean name="impedimentDao" class="com.createidea.scrumfriend.dao.impediment.ImpedimentDaoImpl" parent="baseDao" />
+	
+	
+</beans>

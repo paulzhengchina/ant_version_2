@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="blog" extends="basic,json-default" namespace="/blog">
+	    
+		<action name="maintainblogs" class="blogAction" method="displayAllBlogs">
+			<result name="success">/WEB-INF/page/blog/maintainblogs.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="createblog" class="blogAction" method="createBlog">
+			<result name="success">/WEB-INF/page/blog/createblog.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="saveblog" class="blogAction" method="saveBlog">
+			<result name="success" type="redirectAction">maintainblogs</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="editblog" class="blogAction" method="editBlog">
+			<result name="success">/WEB-INF/page/blog/editblog.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="index" class="blogAction" method="displayAllBlogs">
+			<result name="success">/WEB-INF/page/blog/blogindex.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="readblog" class="blogAction" method="readBlog">
+			<result name="success">/WEB-INF/page/blog/blog.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="uploadLogo" class="blogAction" method="uploadLogo">
+			<result  type="json">
+			     <param name="includeProperties">
+			         updatedLogoPath,
+			         attachmentId                                          
+	             </param>
+			</result>	
+		</action>
+		
+		
+		
+		
+	</package>
+</struts>	

@@ -1,0 +1,144 @@
+body {
+	color: #000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+td {
+	line-height:160%;
+	color: #000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+P {
+	color: #000000;
+	font-size: 12px;
+}
+input {
+	color: #000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+select {
+	color: #000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+textarea {
+	color: #000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+}
+a {
+	color: #000000;
+	text-decoration: none;
+}
+a:hover {
+	color: #FF0000;
+}
+
+.curd a {
+	color:#3E5A03;
+}
+.curd a:hover {
+	color:#ff0000;
+	text-decoration:underline;
+}
+.padding2 {
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 2px;
+	padding-top: 3px;
+}
+.menuHide {
+	display: none;
+}
+.menuShoe {
+	display: block;
+}
+.arial {
+	font: 10px verdana
+}
+.p105 {
+	font-size: 10.5pt
+}
+
+.treeview {
+	padding-left:10px;
+	margin:0px;
+}
+
+.treeview ul{ /*CSS for Simple Tree Menu*/
+	margin: 0;
+	padding: 0;
+}
+
+.treeview li{ /*Style for LI elements in general (excludes an LI that contains sub lists)*/
+	background:url(../images/admin/list.gif) no-repeat left center;
+	list-style-type: none;
+	padding-left: 22px;
+	margin-bottom: 3px;
+}
+
+.treeview li.submenu{ /* Style for LI that contains sub lists (other ULs). */
+	background:url(../images/admin/closed.gif) no-repeat left 1px;
+	cursor: hand !important;
+	cursor: pointer !important;
+	font-weight:bold;
+}
+
+
+.treeview li.submenu ul{ /*Style for ULs that are children of LIs (submenu) */
+	display: none; /*Hide them by default. Don't delete. */
+}
+
+.treeview .submenu ul li{ /*Style for LIs of ULs that are children of LIs (submenu) */
+	cursor: default;
+}
+.close_floatbox_loc {
+	float:right;
+	width:50px;
+	height:25px;
+	background:#2E4600;
+	margin-right:20px;
+}
+.close_floatbox_loc:hover {
+	background:#669900;
+}
+.close_floatbox_loc a {
+	color:#ffffff;
+}
+.close_floatbox_loc a:hover {
+	color:#ff0000;
+}
+.close-floatbox {
+	float:left;
+	padding:5px 13px;
+}
+
+.btnCode {
+	background:transparent url(prettify/code.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+.btnFlv {
+	background:transparent url(mediaplayer/flv.gif) no-repeat 16px 16px;
+	background-position:2px 2px;
+}
+.btnMap {
+	width:50px !important;
+	background:transparent url(${pageContext.request.contextPath}/js/xheditor/xheditor_plugins/googlemap/map.gif) no-repeat center center;
+}
+/*********·ÖÒ³ÑùÊ½**************/
+.page_style {
+	height:30px;
+	line-height:30px;
+	margin-right:10px;
+}
+.page-navi-count a {
+	border:1px solid #0090D1;
+	padding:2px;
+	margin-right:5px;
+}
+.page-navi-count a:hover {
+	background:#0090D1;
+	color:#ff0000;
+}

@@ -1,0 +1,27 @@
+.header {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/header_bg.jpg',sizingMethod='scale');
+}
+.content_all_bg {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/body_bg.jpg',sizingMethod='scale');
+}
+.footer {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/footer_bg.jpg',sizingMethod='scale');
+}
+.header_sec {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/header_bg.jpg',sizingMethod='scale');
+}
+.content_all_bg_sec {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/body_bg.jpg',sizingMethod='scale');
+}
+.footer_sec {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/footer_bg.jpg',sizingMethod='scale');
+}
+.prod_info {
+	height:30px;
+}

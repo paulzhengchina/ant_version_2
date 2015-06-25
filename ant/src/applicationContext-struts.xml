@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       default-lazy-init="true">
+    <!-- 所有ACTION都继承此类 -->
+	<bean id="baseAction" class="com.createidea.scrumfriend.struts.action.BaseAction" scope="prototype">
+	
+	</bean>   
+	
+	<bean id="userAction" class="com.createidea.scrumfriend.struts.action.UserAction" scope="prototype" parent="baseAction">
+	     <property name="userService" ref="userService" />
+	     <property name="attachmentService" ref="attachmentService" />	      
+	</bean>
+	<bean id="storyAction" class="com.createidea.scrumfriend.struts.action.StoryAction" scope="prototype" parent="baseAction">
+	     <property name="storyService" ref="storyService" />
+	     <property name="sprintService" ref="sprintService" />
+	     <property name="projectService" ref="projectService" />
+	</bean>
+	<bean id="projectAction" class="com.createidea.scrumfriend.struts.action.ProjectAction" scope="prototype" parent="baseAction">
+	      <property name="projectService" ref="projectService" />
+	      <property name="attachmentService" ref="attachmentService" />
+	      <property name="sprintService" ref="sprintService" /> 
+	      <property name="storyService" ref="storyService" /> 
+	</bean>
+	<bean id="sprintAction" class="com.createidea.scrumfriend.struts.action.SprintAction" scope="prototype" parent="baseAction">
+	      <property name="sprintService" ref="sprintService" />
+	      <property name="userService" ref="userService"></property>
+		  <property name="storyService" ref="storyService"></property>
+		  <property name="statisticsService" ref="statisticsService"></property>
+		  <property name="taskService" ref="taskService"></property>
+		  <property name="projectService" ref="projectService" />
+	</bean>
+	<bean id="statisticsAction" class="com.createidea.scrumfriend.struts.action.StatisticsAction" scope="prototype" parent="baseAction">
+	      <property name="statisticsService" ref="statisticsService" />
+	</bean>
+	<bean id="taskAction" class="com.createidea.scrumfriend.struts.action.TaskAction" scope="prototype" parent="baseAction">
+		<property name="taskService" ref="taskService"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="storyService" ref="storyService"></property>
+	</bean>
+	<bean id="blogAction" class="com.createidea.scrumfriend.struts.action.BlogAction" scope="prototype" parent="baseAction">
+	      <property name="blogService" ref="blogService" />
+	      <property name="attachmentService" ref="attachmentService" />
+	</bean>
+	
+	<bean id="uploadAction" class="com.createidea.scrumfriend.struts.action.UploadAction" scope="prototype" parent="baseAction">
+	      <property name="attachmentService" ref="attachmentService" />
+	</bean>
+	
+	<bean id="impedimentAction" class="com.createidea.scrumfriend.struts.action.ImpedimentAction" scope="prototype" parent="baseAction">
+	      <property name="impedimentService" ref="impedimentService" />
+	      <property name="projectService" ref="projectService" />
+	</bean>
+	
+	<bean id="adminAction" class="com.createidea.scrumfriend.struts.action.AdminAction" scope="prototype" parent="baseAction">
+          <property name="userService" ref="userService" />
+	</bean>
+</beans>

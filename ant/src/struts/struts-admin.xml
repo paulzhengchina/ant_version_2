@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="admin" extends="basic,json-default" namespace="/admin">
+      
+		<action name="console" class="adminAction" method="loadConsole">		
+		     <result name="success">/WEB-INF/page/admin/console.jsp</result>		     
+		</action>
+		
+		<action name="sendUpdateInfo" class="adminAction" method="sendUpdateInfo">		
+		     <result name="success">/WEB-INF/page/admin/console.jsp</result>		     
+		</action>
+	    
+	    	    		
+	</package>
+</struts>	

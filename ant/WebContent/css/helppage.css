@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+.help_header{
+
+	height:30px;
+	line-height:30px;
+	font-size:18px;
+	background:#999999;
+	font-family:Microsoft YaHei;
+	letter-spacing:1px;
+	margin-top:10px;
+	padding:5px;
+}
+
+.help_content{
+	margin-top:15px;
+	font-family:Microsoft YaHei;
+}
+
+dt{
+	font-size:16px;
+	margin-top:10px;
+	background:#cccccc;
+	letter-spacing:0.5px;
+	padding:3px;
+}
+
+dd{
+	margin-top:2px;
+	letter-spacing:1px;
+	padding-left:3px;
+	font-size:13px;
+}

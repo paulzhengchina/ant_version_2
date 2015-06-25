@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="impediment" extends="basic,json-default" namespace="/impediment">
+	     <interceptors>  
+            <interceptor name="authority"  class="com.createidea.scrumfriend.struts.interceptor.AuthorizationInterceptor" />  
+            <interceptor-stack name="customizedStack">  
+                <interceptor-ref name="authority" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="customizedStack" />
+		<action name="showimpediments" class="impedimentAction" method="showImpediments">
+		   <result name="success">/WEB-INF/page/impediment/showImpediments.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="filterimpediments" class="impedimentAction" method="filterImpediments">
+		   <result name="success">/WEB-INF/page/impediment/showImpediments.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="createimpediment" class="impedimentAction" method="createImpediment">
+		   <result name="success">/WEB-INF/page/impediment/createImpediment.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="saveimpediment" class="impedimentAction" method="saveImpediment">
+		   <result name="success" type="redirect">showimpediments.action?projectId=%{projectId}</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="analyseimpediment" class="impedimentAction" method="analyseImpediment">
+		   <result name="success">/WEB-INF/page/impediment/analyseImpediment.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="saveAnalyseImpediment" class="impedimentAction" method="saveAnalyseImpediment">
+		   <result name="success" type="redirect">showimpediments.action?projectId=%{projectId}</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="completeImpediment" class="impedimentAction" method="completeImpediment">
+		   <result name="success">/WEB-INF/page/impediment/finishImpediment.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="saveResultImpediment" class="impedimentAction" method="saveResultImpediment">
+		   <result name="success" type="redirect">showimpediments.action?projectId=%{projectId}</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="viewImpediment" class="impedimentAction" method="viewImpediment">
+		   <result name="success">/WEB-INF/page/impediment/viewImpediment.jsp</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="editImpediment" class="impedimentAction" method="editImpediment">
+		   <result name="edit_analyse" type="redirect">analyseimpediment.action?impedimentId=%{impedimentId}</result>
+		   <result name="edit_result" type="redirect">completeImpediment.action?impedimentId=%{impedimentId}</result>
+		   <result name="edit_initial">/WEB-INF/page/impediment/editInitialImpediment.jsp</result>
+		</action>
+		
+		<action name="updateImpediment" class="impedimentAction" method="updateImpediment">
+		   <result name="success" type="redirect">showimpediments.action?projectId=%{projectId}</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="deleteImpediment" class="impedimentAction" method="deleteImpediment">
+		   <result name="success" type="redirect">showimpediments.action?projectId=%{projectId}</result>
+		   <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="getSummaryData" class="impedimentAction" method="getSummaryData">
+			<result  type="json">
+			   <param name="includeProperties">
+			        impedimentsSummary.*		                                               
+	           </param>
+			</result>		
+		</action>
+		
+	</package>
+</struts>	

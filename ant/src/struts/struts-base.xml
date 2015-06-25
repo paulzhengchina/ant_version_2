@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="basic" namespace="/" extends="struts-default">
+       
+       
+       <interceptors>  
+            <interceptor name="authority"  class="com.createidea.scrumfriend.struts.interceptor.AuthorizationInterceptor" />  
+            <interceptor-stack name="customizedStack">  
+                <interceptor-ref name="authority" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="customizedStack" />
+		<default-action-ref name="pagenotfound"></default-action-ref>  
+		<global-results>
+             <result name="login">/index.jsp</result>
+        </global-results>
+		<action name="pagenotfound">  
+				<result>/resourceNotFound.html</result>  
+		</action>
+	</package>
+</struts>	

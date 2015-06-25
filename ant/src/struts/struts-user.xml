@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="user" extends="basic,json-default" namespace="/user">
+      
+		<action name="userLogin" class="userAction" method="verifyUser">
+		
+		     <result name="redirect_project_page" type="redirect">/project/listProject.action</result>		     
+			 <result name="redirect_default_project" type="redirect">/project/viewProject.action?projectId=${defaulProjectId}</result>
+             <result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="setDefaultProject" class="userAction" method="setDefaultProject">
+			 <result name="success" type="json"><param name="root">ok</param></result>
+			 <result name="input">/index.jsp</result>
+		</action>
+		<action name="loadRegister" class="userAction" method="loadRegister">
+			<result name="success">/WEB-INF/page/user/register.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="registerUser" class="userAction" method="registerUser">
+			<result  type="json">
+			   <param name="includeProperties">
+			        result     
+	           </param>
+			</result>	
+		</action>
+		
+		<action name="getDefaultProject" class="userAction" method="getDefaultProject">
+			 <result name="success" type="json"><param name="root">projectId</param></result>
+		</action>
+		
+		<action name="logout" class="userAction" method="logout">
+			<result name="success">/index.jsp</result>
+		</action>
+		
+		<action name="setting" class="userAction" method="setting">
+			<result name="success">/WEB-INF/page/user/setting.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="updateUserName" class="userAction" method="updateUserName">
+			<result  type="json">
+			   <param name="includeProperties">
+			        userName     
+	           </param>
+			</result>			
+		</action>
+		
+		<action name="updateUserPassword" class="userAction" method="updateUserPassword">
+			<result  type="json">
+			   <param name="includeProperties">
+			        password     
+	           </param>
+			</result>			
+		</action>
+		
+		<action name="updatePhoto" class="userAction" method="updatePhoto">
+			<result  type="json">
+			   <param name="includeProperties">
+			        photoFileName    
+	           </param>
+			</result>			
+		</action>
+		
+		<action name="findPassword" class="userAction" method="findPassword">
+			<result  type="json">
+			   <param name="includeProperties">
+			        result     
+	           </param>
+			</result>	
+		</action>
+		
+		
+	</package>
+</struts>	

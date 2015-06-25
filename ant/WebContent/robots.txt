@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /learning/helpmain.html
+Allow: /blog/index.action

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.createidea.scrumfriend.to.StatisticsSprintTo" table="statistics_sprint">
+    
+        <id name="id" type="java.lang.String">
+            <column name="id" length="36" />
+            <generator class="foreign" >
+               <param name="property">sprint</param>
+            </generator>
+        </id>
+          
+        <property name="committedStoryPoint" type="java.lang.Float">
+            <column name="committed_story_point" />
+        </property>
+        
+        <property name="completedStoryPoint" type="java.lang.Float">
+            <column name="completed_story_point" />
+        </property>
+        
+        <property name="remainingStoryPoint" type="java.lang.Float">
+            <column name="remaining_story_point" />
+        </property>
+        
+        <property name="totalEffort" type="java.lang.Float">
+            <column name="total_effort" />
+        </property>
+        
+        <property name="remainingEffort" type="java.lang.Float">
+            <column name="remaining_effort" />
+        </property>
+        
+        <property name="issuesNumber" type="java.lang.Integer">
+            <column name="issues_number" />
+        </property>
+        
+        <one-to-one name="sprint" class="com.createidea.scrumfriend.to.SprintTo" cascade="all"/>
+    </class>
+</hibernate-mapping>

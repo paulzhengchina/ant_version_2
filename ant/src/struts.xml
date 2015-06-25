@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+  <constant name="struts.i18n.encoding" value="UTF-8" /> 
+  <constant name="struts.i18n.reload" value="true" /> 
+  <constant name="struts.devMode" value="false" /> 
+  <constant name="struts.configuration.xml.reload" value="false" /> 
+  <constant name="struts.custom.i18n.resources" value="ApplicationResources,ApplicationMessages,globalMessages" /> 
+  <constant name="struts.serve.static" value="true" /> 
+  <constant name="struts.serve.static.browserCache" value="false" />
+  
+  <include file="struts/struts-base.xml" />
+  <include file="struts/struts-user.xml" />
+  <include file="struts/struts-story.xml" />
+  <include file="struts/struts-project.xml" /> 
+  <include file="struts/struts-sprint.xml" />
+  <include file="struts/struts-statistics.xml" />
+  <include file="struts/struts-task.xml" />
+  <include file="struts/struts-blog.xml" />
+  <include file="struts/struts-common.xml" />
+  <include file="struts/struts-impediment.xml" />
+  <include file="struts/struts-admin.xml" />  
+	<package name="default" namespace="/" extends="struts-default">
+       
+       
+       <interceptors>  
+            <interceptor name="authority"  class="com.createidea.scrumfriend.struts.interceptor.AuthorizationInterceptor" />  
+            <interceptor-stack name="customizedStack">  
+                <interceptor-ref name="authority" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="customizedStack" />
+		<default-action-ref name="pagenotfound"></default-action-ref>  
+		<global-results>
+             <result name="login">/index.jsp</result>
+        </global-results>
+		<action name="pagenotfound">  
+				<result>/resourceNotFound.html</result>  
+		</action>
+	</package>
+	
+</struts>

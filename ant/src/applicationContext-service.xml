@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+       default-lazy-init="true">
+     
+	
+	<bean id="userService" class="com.createidea.scrumfriend.service.user.UserServiceImpl">		
+		<property name="userDao" ref="userDao" />
+		<property name="sendEmailService" ref="sendEmailService" />		
+	</bean>
+	
+	<bean id="projectService" class="com.createidea.scrumfriend.service.project.ProjectServiceImpl">		
+		<property name="projectDao" ref="projectDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="userService" ref="userService" />		
+	</bean>
+	
+	<bean id="storyService" class="com.createidea.scrumfriend.service.story.StoryServiceImpl">		
+		<property name="storyDao" ref="storyDao" />
+	</bean>
+	
+	<bean id="sprintService" class="com.createidea.scrumfriend.service.sprint.SprintServiceImpl">		
+		<property name="sprintDao" ref="sprintDao" />
+		<property name="storyDao" ref="storyDao" />		
+	</bean>
+	
+	<bean id="taskService" class="com.createidea.scrumfriend.service.task.TaskServiceImpl">
+		<property name="taskDao" ref="taskDao"></property>
+	</bean>
+	
+	<bean id="statisticsService" class="com.createidea.scrumfriend.service.statistics.StatisticsServiceImpl">
+		<property name="statisticsDao" ref="statisticsDao"></property>
+		<property name="storyDao" ref="storyDao"></property>
+		<property name="taskDao" ref="taskDao"></property>
+		<property name="sprintDao" ref="sprintDao"></property>		
+	</bean>
+	
+	<bean id="attachmentService" class="com.createidea.scrumfriend.service.attachment.AttachmentServiceImpl">
+		<property name="attachmentDao" ref="attachmentDao"></property>
+	</bean>
+	
+	<bean id="sendEmailService" class="com.createidea.scrumfriend.utils.email.SendMailService">
+	</bean>
+	
+	<bean id="blogService" class="com.createidea.scrumfriend.service.blog.BlogServiceImpl">
+		<property name="blogDao" ref="blogDao"></property>
+	</bean>
+	
+	<bean id="impedimentService" class="com.createidea.scrumfriend.service.impediment.ImpedimentServiceImpl">
+		<property name="impedimentDao" ref="impedimentDao"></property>
+	</bean>
+	
+	
+</beans>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="project" extends="basic,json-default" namespace="/project">
+	    <interceptors>  
+            <interceptor name="authority"  class="com.createidea.scrumfriend.struts.interceptor.AuthorizationInterceptor" />  
+            <interceptor-stack name="customizedStack">  
+                <interceptor-ref name="authority" />  
+                <interceptor-ref name="defaultStack" />  
+            </interceptor-stack>  
+        </interceptors>  
+        <default-interceptor-ref name="customizedStack" />	
+		<action name="loadCreatePage" class="projectAction" method="loadCreatePage">
+			<result name="success">/WEB-INF/page/project/createPage.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="createProject" class="projectAction" method="createProject">
+			<result name="success" type="redirectAction">listProject</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		
+		<action name="listProject" class="projectAction" method="listProjects">
+			<result name="success">/WEB-INF/page/project/projectsPage.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="modifyProject" class="projectAction" method="modifyProject">
+			 <result name="success">
+                       /WEB-INF/page/project/modifyProject.jsp
+             </result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="updateProject" class="projectAction" method="updateProject">
+			<result name="success" type="redirectAction">listProject</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="viewProject" class="projectAction" method="viewProject">
+			<result name="success">/WEB-INF/page/project/viewProject.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="setUsersOfProject" class="projectAction" method="setUsersOfProject">
+			<result name="success">/WEB-INF/page/project/setUsersOfProject.jsp</result>
+			<result name="input">/index.jsp</result>
+		</action>
+		
+		<action name="changeProjectLogo" class="projectAction" method="changeProjectLogo">
+			<result  type="json">
+			     <param name="includeProperties">
+			         updatedLogoPath,
+			         attachmentId                                          
+	             </param>
+			</result>			
+		</action>
+		
+		<action name="addANewProjectMember" class="projectAction" method="addANewProjectMember">
+			<result  type="json">
+			     <param name="includeProperties">
+	                   userEmail                                            
+	           </param>
+			</result>			
+		</action>
+		
+		<action name="removeAMemberFromProject" class="projectAction" method="removeAMemberFromProject">
+			<result  type="json">
+			     <param name="includeProperties">
+	                                             userId
+	                                                                                        
+	            </param>
+			</result>			
+		</action>
+		
+		<action name="deleteProject" class="projectAction" method="deleteProject">
+			<result  type="json">
+			     <param name="includeProperties">										     
+	                 projectId                                                                 
+	           </param>
+			</result>			
+		</action>
+		
+		<action name="loadAddMemeberForProject" class="projectAction" method="loadAddMemeberForProject">
+		     <result name="success">
+                       /WEB-INF/page/project/addNewMemberForProject.jsp
+             </result>
+		</action>
+		
+		<action name="getUsersOfProject" class="projectAction" method="getUserListOfProject">
+			<result  type="json">
+			     <param name="includeProperties">
+	                   usersOfProject\[\d+\]\.id, usersOfProject\[\d+\]\.name,usersOfProject\[\d+\]\.email                                           
+	           </param>
+			</result>			
+		</action>
+	</package>
+</struts>	
