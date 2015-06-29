@@ -2,14 +2,13 @@ package com.createidea.scrumfriend.struts.action;
 
 import java.io.File;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.createidea.scrumfriend.service.attachment.AttachmentService;
-import com.createidea.scrumfriend.service.impediment.ImpedimentService;
 import com.createidea.scrumfriend.service.project.ProjectService;
 import com.createidea.scrumfriend.service.sprint.SprintService;
 import com.createidea.scrumfriend.service.story.StoryService;
@@ -145,7 +144,7 @@ public class ProjectAction extends BaseAction {
     }
     
     public String getUserListOfProject(){
-    	usersOfProject=new ArrayList<>();
+    	usersOfProject=new ArrayList<UserTo>();
     	usersOfProject.addAll(projectService.getProjectById(projectId).getUsers());
     	return SUCCESS;
     }
