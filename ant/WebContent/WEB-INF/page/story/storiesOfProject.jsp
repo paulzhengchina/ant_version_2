@@ -55,7 +55,13 @@
 <body>
 
 <div class="content">
-
+    <div class="header">
+			<p class="project_name">
+				<s:property value="%{project.name}" />
+			</p>
+			<p class="page_info">需求库</p>
+			<p class="create_item">+创建需求</p>
+	</div>
 	<div class="project_stories" id='project_stories' style="position: relative;">
 			<s:hidden name="projectId" value="%{projectId}" />
 			<s:hidden name="draggingCardId" value="" />

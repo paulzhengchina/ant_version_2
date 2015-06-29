@@ -1,5 +1,6 @@
 package com.createidea.scrumfriend.service.statistics;
 
+import java.awt.geom.FlatteningPathIterator;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	
     
     public  HashMap createDataForProjectBurnDown(String projectId) { 
-    	HashMap dataMap=new HashMap<>();
+    	HashMap dataMap=new HashMap<String,float[]>();
 	    List<StatisticsProjectTo> statistics=statisticsDao.getProjectStatistics(projectId);
 	    int length=0;
 	    if(statistics!=null&& (length=statistics.size())>0){
@@ -123,7 +124,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Override
 	public Map getDataForTeamVelocity(String projectId) {
 		// TODO Auto-generated method stub
-		HashMap dataMap=new HashMap<>();
+		HashMap dataMap=new HashMap<String,float[]>();
 	    List<StatisticsSprintTo> statistics=statisticsDao.getSprintsStatisticsForProject(projectId);
 	    int length=0;
 	    if(statistics!=null&& (length=statistics.size())>0){
