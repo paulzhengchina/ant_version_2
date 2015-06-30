@@ -94,12 +94,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	public UserTo getUserByEmail(String userEmail) {
 		// TODO Auto-generated method stub	
 		Session session = sessionFactory.getCurrentSession();
-		Transaction tx=session.beginTransaction();
 		Criteria criteria = session.createCriteria(UserTo.class);
+		Object userObjs= criteria.list();		
 		criteria.add(Restrictions.eq("email", userEmail ));		
 		UserTo user=null;
 	    Object userObj= criteria.uniqueResult();
-	    tx.commit();
 	    if(userObj !=null)
 	    	user=(UserTo)userObj;
 	    return user;

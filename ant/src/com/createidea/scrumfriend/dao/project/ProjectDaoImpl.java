@@ -6,6 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
 import com.createidea.scrumfriend.dao.user.UserDao;
 import com.createidea.scrumfriend.to.ImpedimentTo;
@@ -13,18 +18,20 @@ import com.createidea.scrumfriend.to.ProjectTo;
 import com.createidea.scrumfriend.to.UserTo;
 
 public class ProjectDaoImpl extends BaseDaoImpl implements  ProjectDao {
-
+    
 	@Override
 	public void saveProject(ProjectTo project) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().save(project);
+		this.sessionFactory.getCurrentSession().save(project);
 	}
 
 	@Override
-	public List<ProjectTo> getProject(String userId){
+	public List<ProjectTo> getProjects(String userId){
 		// TODO Auto-generated method stub
-		List<ProjectTo> projects=(List<ProjectTo>)this.getHibernateTemplate().find("from ProjectTo where user.id=?",userId+"and status=1");
-		return projects;
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
+		criteria.add(Restrictions.eq("user.id", userId ));
+		criteria.add(Restrictions.eq("status", 1));
+		return criteria.list();
 	}
 
 	@Override
@@ -35,12 +42,16 @@ public class ProjectDaoImpl extends BaseDaoImpl implements  ProjectDao {
 
 	@Override
 	public ProjectTo getProjectById(String id) {
-		ProjectTo projectTo = (ProjectTo) this.getHibernateTemplate().get(ProjectTo.class, id);
+		ProjectTo projectTo=null;
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
+		criteria.add(Restrictions.eq("id", id ));
+		Object projectObj=criteria.uniqueResult();
+		if(projectObj!=null)
+			projectTo=(ProjectTo)projectObj;
 		return projectTo;
 	}
 	
-	public void updateProject(ProjectTo projectTo){
-		
-		this.getHibernateTemplate().update(projectTo);
+	public void updateProject(ProjectTo projectTo){		
+		saveProject(projectTo);
 	}
 }

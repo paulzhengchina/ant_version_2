@@ -2,6 +2,7 @@ package com.createidea.scrumfriend.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,7 +17,8 @@ import com.createidea.scrumfriend.utils.Pager;
 public class BaseDaoImpl implements BaseDao {
     
 	
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
+	protected Criteria criteria;
 	
 	public List findResultForPager(String hql, int start, int num) {
 
