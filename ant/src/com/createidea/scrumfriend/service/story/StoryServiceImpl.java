@@ -75,11 +75,7 @@ public class StoryServiceImpl implements StoryService {
 		return storyDao.getStoriesForSprintByStatus(sprintId,status);
 	}
 
-	@Override
-	public List getStoriesForProjectBySearchWithName(String projectId,String query) {
-		// TODO Auto-generated method stub
-		return storyDao.getStoriesForProjectBySearchWithName(projectId,query);
-	}
+	
 
 	@Override
 	public StoryTo getStoryById(String storyId) {

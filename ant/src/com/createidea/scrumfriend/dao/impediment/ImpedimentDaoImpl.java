@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateCallback;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
+import com.createidea.scrumfriend.to.BlogTo;
 import com.createidea.scrumfriend.to.ImpedimentTo;
 import com.createidea.scrumfriend.to.StoryTo;
 
@@ -28,12 +29,12 @@ public class ImpedimentDaoImpl extends BaseDaoImpl implements ImpedimentDao {
 		statusList.add(1);
 		statusList.add(2);
 		statusList.add(3);
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ImpedimentTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.in("status", statusList));
-		detachedCriteria.addOrder(Order.asc("status"));
-		detachedCriteria.addOrder(Order.asc("severity"));		
-		return (List<ImpedimentTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ImpedimentTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.in("status", statusList));
+		criteria.addOrder(Order.asc("status"));
+		criteria.addOrder(Order.asc("severity"));		
+		return (List<ImpedimentTo>)criteria.list();
 	}
 
 	@Override
@@ -41,11 +42,11 @@ public class ImpedimentDaoImpl extends BaseDaoImpl implements ImpedimentDao {
 		// TODO Auto-generated method stub
 		if(impediment.getId()==null||impediment.getId()=="")
 		{
-			String impedimentId=(String)this.getHibernateTemplate().save(impediment);
+			String impedimentId=(String)this.sessionFactory.getCurrentSession().save(impediment);
 			return getImpediment(impedimentId);
 		}
 		else{
-			this.getHibernateTemplate().saveOrUpdate(impediment);
+			this.sessionFactory.getCurrentSession().saveOrUpdate(impediment);
 	        return impediment;
 		}
 	}
@@ -53,38 +54,42 @@ public class ImpedimentDaoImpl extends BaseDaoImpl implements ImpedimentDao {
 	@Override
 	public ImpedimentTo getImpediment(String id) {
 		// TODO Auto-generated method stubc
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ImpedimentTo.class);
-		detachedCriteria.add(Restrictions.eq("id", id));
-		List<ImpedimentTo> impediments=(List<ImpedimentTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
-		if(impediments!=null&&impediments.size()>0)
-			return impediments.get(0);
-		else
-			return null;
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ImpedimentTo.class);
+		criteria.add(Restrictions.eq("id", id));
+		ImpedimentTo impediment=null;
+		Object impedimentObj=criteria.uniqueResult();
+		if(impedimentObj!=null)
+			impediment=(ImpedimentTo)impedimentObj;
+		return impediment;
 			
 	}
 
 	@Override
 	public List<ImpedimentTo> searchImpedimentsByConditions(Integer[] filteredSatuses, Integer[] filteredseverities, String projectId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ImpedimentTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ImpedimentTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
 		if(filteredSatuses.length>0)
-		detachedCriteria.add(Restrictions.in("status", filteredSatuses));
+			criteria.add(Restrictions.in("status", filteredSatuses));
 		if(filteredseverities.length>0)
-		detachedCriteria.add(Restrictions.in("severity", filteredseverities));
-		detachedCriteria.addOrder(Order.asc("status"));
-		detachedCriteria.addOrder(Order.asc("severity"));		
-		return (List<ImpedimentTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+			criteria.add(Restrictions.in("severity", filteredseverities));
+		criteria.addOrder(Order.asc("status"));
+		criteria.addOrder(Order.asc("severity"));		
+		return (List<ImpedimentTo>)criteria.list();
 	}
 
 	@Override
 	public int getImpedimentsCountByStatusAndSevrity(String projectId,int status, int severity) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(ImpedimentTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.eq("status", status));
-		detachedCriteria.add(Restrictions.eq("severity", severity));
-		return this.getHibernateTemplate().findByCriteria(detachedCriteria).size();
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ImpedimentTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.eq("status", status));
+		criteria.add(Restrictions.eq("severity", severity));
+		List impediments=criteria.list();
+		int count=0;
+		if(impediments!=null)
+			count=impediments.size();
+		return count;
 	}
 	
 	

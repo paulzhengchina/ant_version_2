@@ -21,9 +21,6 @@ public interface StoryService {
 	
 	public List<StoryTo> getStoriesForSprintByStatus(String sprintId, int status);
 	
-	public List getStoriesForProjectBySearchWithName(String projectId,
-			String query);
-	
 	public StoryTo getStoryById(String storyId);
 
 	public void updateStoryStatus(String storyId, int storyStatus);

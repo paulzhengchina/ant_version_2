@@ -29,7 +29,8 @@ public class ProjectDaoImpl extends BaseDaoImpl implements  ProjectDao {
 	public List<ProjectTo> getProjects(String userId){
 		// TODO Auto-generated method stub
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
-		criteria.add(Restrictions.eq("user.id", userId ));
+		criteria.createAlias("users", "users");
+		criteria.add(Restrictions.eq("users.id", userId ));	
 		criteria.add(Restrictions.eq("status", 1));
 		return criteria.list();
 	}

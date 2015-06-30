@@ -8,6 +8,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
+import com.createidea.scrumfriend.to.ProjectTo;
 import com.createidea.scrumfriend.to.StatisticsDateTo;
 import com.createidea.scrumfriend.to.StatisticsProjectTo;
 import com.createidea.scrumfriend.to.StatisticsSprintTo;
@@ -17,55 +18,55 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 	@Override
 	public void saveStatistics(StatisticsProjectTo statistics) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().save(statistics);
+		this.sessionFactory.getCurrentSession().save(statistics);
 	}
 
 	@Override
 	public List<StatisticsProjectTo> getProjectStatistics(String projectId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StatisticsProjectTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.addOrder(Order.asc("date"));
-		return (List<StatisticsProjectTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.addOrder(Order.asc("date"));
+		return (List<StatisticsProjectTo>)criteria.list();
 	}
 
 	@Override
 	public void updateSprintStatistics(StatisticsSprintTo statistics) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().saveOrUpdate(statistics);
+		this.sessionFactory.getCurrentSession().save(statistics);
 	}
 
 	@Override
 	public List<StatisticsSprintTo> getSprintsStatisticsForProject(String projectId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StatisticsSprintTo.class);
-		detachedCriteria.createCriteria("sprint").add(Restrictions.eq("project.id", projectId));
-		return (List<StatisticsSprintTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
+		criteria.add(Restrictions.eq("sprint.project.id", projectId));
+		return criteria.list();
 	}
 
 	@Override
 	public StatisticsDateTo getStatisticsDateByDate(Date date) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StatisticsDateTo.class);
-		detachedCriteria.add(Restrictions.eq("date", date));
-		List<StatisticsDateTo> statistics=(List<StatisticsDateTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
-		if(statistics!=null&&statistics.size()>0)
-			return statistics.get(0);
-		else
-			return null;
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StatisticsDateTo.class);
+		criteria.add(Restrictions.eq("date", date));
+		StatisticsDateTo statisticsDateTo=null;
+		Object statisticsObj=criteria.uniqueResult();
+		if(statisticsObj!=null)
+			statisticsDateTo=(StatisticsDateTo)statisticsObj;
+		return statisticsDateTo;
 	}
 
 	@Override
 	public void saveOrUpdateStatisticsDate(StatisticsDateTo statisticsDate) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().saveOrUpdate(statisticsDate);
+		this.sessionFactory.getCurrentSession().saveOrUpdate(statisticsDate);
 	}
 
 	@Override
 	public List<StatisticsDateTo> getStatisticsDateForSprint(String sprintId) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StatisticsDateTo.class);
-		detachedCriteria.add(Restrictions.eq("sprint.id", sprintId));
-		return (List<StatisticsDateTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StatisticsDateTo.class);
+		criteria.add(Restrictions.eq("sprint.id", sprintId));
+		return (List<StatisticsDateTo>)criteria.list();
 	}
 
 

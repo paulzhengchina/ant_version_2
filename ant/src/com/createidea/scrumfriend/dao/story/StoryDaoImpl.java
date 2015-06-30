@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate4.HibernateCallback;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
+import com.createidea.scrumfriend.to.ImpedimentTo;
 import com.createidea.scrumfriend.to.ProjectTo;
 import com.createidea.scrumfriend.to.StoryTo;
 
@@ -24,28 +25,28 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	@Override
 	public List<StoryTo> storysByStatus(int status) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("status", status));
-		detachedCriteria.addOrder(Order.asc("priority"));
-		return (List<StoryTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("status", status));
+		criteria.addOrder(Order.asc("priority"));
+		return (List<StoryTo>)criteria.list();
 	}
 	
 	@Override
 	public void updateStory(StoryTo story) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().saveOrUpdate(story);
+		this.sessionFactory.getCurrentSession().saveOrUpdate(story);
 	}
 
 	@Override
 	public StoryTo getStoryById(String card_id) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("id", card_id));
-		List storiesList=this.getHibernateTemplate().findByCriteria(detachedCriteria);
-		if(storiesList!=null && storiesList.size()>0)
-		   return (StoryTo)this.getHibernateTemplate().findByCriteria(detachedCriteria).get(0);
-		else 
-		   return null;
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("id", card_id));
+		StoryTo story=null;
+		Object storyObj=criteria.uniqueResult();
+		if(storyObj!=null)
+			story=(StoryTo)storyObj;
+		return story;
 	}
 
 	@Override
@@ -55,14 +56,14 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		statusList.add(0);
 		statusList.add(1);
 		statusList.add(2);
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.in("status", statusList));
-		detachedCriteria.addOrder(Order.asc("priorityNum"));
-		detachedCriteria.addOrder(Order.asc("priority"));
-		detachedCriteria.addOrder(Order.desc("businessValue"));
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.in("status", statusList));
+		criteria.addOrder(Order.asc("priorityNum"));
+		criteria.addOrder(Order.asc("priority"));
+		criteria.addOrder(Order.desc("businessValue"));
 		try {
-			return (List<StoryTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+			return (List<StoryTo>)criteria.list();
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,17 +74,17 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	@Override
 	public String createStory(StoryTo story) {
 		// TODO Auto-generated method stub
-		return (String)this.getHibernateTemplate().save(story);
+		return (String)this.sessionFactory.getCurrentSession().save(story);
 	}
 
 	@Override
 	public List<StoryTo> getStoriesForProjectByStatus(String projectId, int status) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.eq("status", status));
-		detachedCriteria.addOrder(Order.desc("priority"));
-		return (List<StoryTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.eq("status", status));
+		criteria.addOrder(Order.desc("priority"));
+		return (List<StoryTo>)criteria.list();
 		
 	}
 
@@ -124,49 +125,28 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	}
 	
 	public float calculateStoryPoint(final String sql) {
-		return (Float) this.getHibernateTemplate().execute(
-				new HibernateCallback() {
-					public Float doInHibernate(Session session) throws HibernateException {
-						SQLQuery query = session.createSQLQuery(sql).addScalar("point", FloatType.INSTANCE);
-						Object count = query.uniqueResult();
-						if(count==null)
-							return Float.valueOf(0);
-						else
-						    return (Float) count;
-					}
-				});
+		return (float)this.sessionFactory.getCurrentSession().createQuery(sql).uniqueResult();
 	}
 
 	@Override
 	public List<StoryTo> getStoriesForSprintByStatus(String sprintId, int status) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("sprint.id", sprintId));
-		detachedCriteria.add(Restrictions.eq("status", status));
-		detachedCriteria.addOrder(Order.desc("priority"));
-		return (List<StoryTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("sprint.id", sprintId));
+		criteria.add(Restrictions.eq("status", status));
+		criteria.addOrder(Order.desc("priority"));
+		return (List<StoryTo>)criteria.list();
 	}
 
-	@Override
-	public List getStoriesForProjectBySearchWithName(String projectId,
-			String query) {
-		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		if(query!=null && !("".equals(query)))
-		detachedCriteria.add(Restrictions.ilike("name", query, MatchMode.ANYWHERE));
-		return this.getHibernateTemplate().findByCriteria(detachedCriteria);
-
-	}
 
 	@Override
 	public List<StoryTo> getStoriesForKanban(String sprintId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(StoryTo.class);
-		detachedCriteria.add(Restrictions.eq("sprint.id", sprintId));
-		detachedCriteria.add(Restrictions.in("status", new Integer[]{0,1} ));
-		detachedCriteria.addOrder(Order.desc("priority"));
-		return (List<StoryTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("sprint.id", sprintId));
+		criteria.add(Restrictions.in("status", new Integer[]{0,1} ));
+		criteria.addOrder(Order.desc("priority"));
+		return (List<StoryTo>)criteria.list();
 	}
 
 	@Override

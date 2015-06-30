@@ -14,6 +14,7 @@ import org.hibernate.type.FloatType;
 import org.springframework.orm.hibernate4.HibernateCallback;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
+import com.createidea.scrumfriend.to.BlogTo;
 import com.createidea.scrumfriend.to.SprintTo;
 import com.createidea.scrumfriend.to.StatisticsSprintTo;
 import com.createidea.scrumfriend.to.StoryTo;
@@ -25,7 +26,7 @@ public class TaskDaoImpl extends BaseDaoImpl implements  TaskDao {
 	@Override
 	public String saveTask(TaskTo task) {
 		// TODO Auto-generated method stub
-		return (String)this.getHibernateTemplate().save(task);
+		return (String)this.sessionFactory.getCurrentSession().save(task);
 	}
 
 	@Override
@@ -37,43 +38,32 @@ public class TaskDaoImpl extends BaseDaoImpl implements  TaskDao {
 	
 	
 	public float calculateRemainingEffort(final String sql) {
-		return (Float) this.getHibernateTemplate().execute(
-			new HibernateCallback() {
-				public Float doInHibernate(Session session) throws HibernateException {
-					SQLQuery query = session.createSQLQuery(sql).addScalar("left_effort", FloatType.INSTANCE);
-					Object count = query.uniqueResult();
-					if(count==null)
-						return Float.valueOf(0);
-					else
-					    return (Float) count;
-				}
-			});
+		return (float)this.sessionFactory.getCurrentSession().createQuery(sql).uniqueResult();
 	}
 	
 	public List<TaskTo> getTasksOfStory(String storyId) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(TaskTo.class);
-		detachedCriteria.add(Restrictions.eq("story.id", storyId ));
-		detachedCriteria.addOrder(Order.asc("id"));
-	    return (List<TaskTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(TaskTo.class);
+		criteria.add(Restrictions.eq("story.id", storyId ));
+		criteria.addOrder(Order.asc("id"));
+	    return (List<TaskTo>)criteria.list();
 	}
 
 	@Override
 	public TaskTo getTaskById(String taskId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(TaskTo.class);
-		detachedCriteria.add(Restrictions.eq("id", taskId ));		
-	    List<TaskTo> tasks=(List<TaskTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
-	    if(tasks!=null&&tasks.size()>0)
-	    	return tasks.get(0);
-	    else {
-			return null;
-		}
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(TaskTo.class);
+		criteria.add(Restrictions.eq("id", taskId ));		
+	    TaskTo task=null;
+	    Object taskObj=criteria.uniqueResult();
+	    if(taskObj!=null)
+	    	task=(TaskTo)taskObj;
+	    return task;
 	}
 
 	@Override
 	public void updateTask(TaskTo task) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().update(task);
+		this.saveTask(task);
 	}
 	
 }

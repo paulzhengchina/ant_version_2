@@ -19,29 +19,33 @@ public class SprintDaoImpl extends BaseDaoImpl implements  SprintDao {
 
 
 	@Override
-	public void updateSprint(SprintTo sprint) {		
-		this.getHibernateTemplate().saveOrUpdate(sprint);
+	public void updateSprint(SprintTo sprint) {	
+		this.sessionFactory.getCurrentSession().save(sprint);
 		
 	}
 
 	@Override
 	public SprintTo getSprintById(String sprintId) {
-		SprintTo sprintTo = (SprintTo) this.getHibernateTemplate().get(SprintTo.class, sprintId);
+		this.criteria=this.getSessionFactory().getCurrentSession().createCriteria(SprintTo.class);
+		criteria.add(Restrictions.eq("id", sprintId ));
+		SprintTo sprintTo = null;
+		if(criteria.uniqueResult()!=null)
+			sprintTo=(SprintTo)criteria.uniqueResult();
 		return sprintTo;
 	}
 
 	@Override
 	public List<SprintTo> getSprintForProject(String projectId) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SprintTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.addOrder(Order.asc("startTime"));
-		return (List<SprintTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		this.criteria=this.getSessionFactory().getCurrentSession().createCriteria(SprintTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.addOrder(Order.asc("startTime"));
+		return (List<SprintTo>)criteria.list();
 	}
 
 	@Override
 	public SprintTo createSprint(SprintTo sprint,String projectId) {
 		sprint.setProject(new ProjectTo(projectId));
-		String id=(String)this.getHibernateTemplate().save(sprint);
+		String id=(String)this.getSessionFactory().getCurrentSession().save(sprint);
 		return getSprintById(id);
 	}
 
@@ -56,16 +60,16 @@ public class SprintDaoImpl extends BaseDaoImpl implements  SprintDao {
 	public void deleteSprint(String sprintId) {
 		SprintTo sprint = new SprintTo();
 		sprint.setId(sprintId);
-		this.getHibernateTemplate().delete(sprint);
+		this.getSessionFactory().getCurrentSession().delete(sprint);
 		
 	}
 
 	public List<SprintTo> getCurrentSprints(String projectId) {
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SprintTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.le("startTime", getPureDateOfToday()));
-		detachedCriteria.add(Restrictions.ge("endTime", getLatestDateOfToday()));
-		List<SprintTo> sprints=(List<SprintTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		this.criteria=this.getSessionFactory().getCurrentSession().createCriteria(SprintTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.le("startTime", getPureDateOfToday()));
+		criteria.add(Restrictions.ge("endTime", getLatestDateOfToday()));
+		List<SprintTo> sprints=(List<SprintTo>)criteria.list();
 		return sprints;
 	}
 	
@@ -97,20 +101,20 @@ public class SprintDaoImpl extends BaseDaoImpl implements  SprintDao {
 	@Override
 	public List<SprintTo> getSprintsFinishedYesterday(Date today,Date twoDaysAgo) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SprintTo.class);
-		detachedCriteria.add(Restrictions.gt("endTime", twoDaysAgo));
-		detachedCriteria.add(Restrictions.lt("endTime", today));
-		return (List<SprintTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		this.criteria=this.getSessionFactory().getCurrentSession().createCriteria(SprintTo.class);
+		criteria.add(Restrictions.gt("endTime", twoDaysAgo));
+		criteria.add(Restrictions.lt("endTime", today));
+		return (List<SprintTo>)criteria.list();
 	}
 
 	@Override
 	public List<SprintTo> getParentSprints(String projectId) {
 		// TODO Auto-generated method stub
-		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(SprintTo.class);
-		detachedCriteria.add(Restrictions.eq("project.id", projectId));
-		detachedCriteria.add(Restrictions.isNull("parentSprint"));
-		detachedCriteria.addOrder(Order.asc("startTime"));
-		return (List<SprintTo>)this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		this.criteria=this.getSessionFactory().getCurrentSession().createCriteria(SprintTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.isNull("parentSprint"));
+		criteria.addOrder(Order.asc("startTime"));
+		return (List<SprintTo>)criteria.list();
 	}
 	
 }

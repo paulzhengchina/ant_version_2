@@ -9,7 +9,7 @@ public class AttachmentDaoImpl extends BaseDaoImpl implements AttachmentDao {
 	@Override
 	public void saveAttachment(AttachmentTo attachment) {
 		// TODO Auto-generated method stub
-		this.getHibernateTemplate().save(attachment);
+		this.getSessionFactory().getCurrentSession().save(attachment);
 	}
 
 }

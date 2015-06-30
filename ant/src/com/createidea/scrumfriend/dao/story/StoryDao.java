@@ -34,9 +34,6 @@ public interface StoryDao {
 
 	public List<StoryTo> getStoriesForSprintByStatus(String sprintId, int status);
 
-	public List getStoriesForProjectBySearchWithName(String projectId,
-			String query);
-
 	public List<StoryTo> getStoriesForKanban(String sprintId);
 	
 	public float calculateStoriesTotalPointByPriority(int priority,String projectId);
