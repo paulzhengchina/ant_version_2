@@ -38,7 +38,11 @@ public class TaskDaoImpl extends BaseDaoImpl implements  TaskDao {
 	
 	
 	public float calculateRemainingEffort(final String sql) {
-		return (float)this.sessionFactory.getCurrentSession().createQuery(sql).uniqueResult();
+		float count=0;
+		Object countObj=this.sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
+		if(countObj!=null)
+			count=(Float)countObj;
+		return count;
 	}
 	
 	public List<TaskTo> getTasksOfStory(String storyId) {

@@ -118,7 +118,7 @@
 		    columns: 12,
 		    callbacks: { reordering: reordering , reordered: reordered }
 		  });
-		$(".addStory").click(function(){
+		$(".create_item").click(function(){
 			DIALOG = $(".story_dialog");
 			DIALOG.dialog({
 				autoOpen : false,
@@ -139,7 +139,7 @@
 		});
 		
 		
-		$(".editStory").live('click',function(){
+		$(".editStory").on('click',function(){
 			DIALOG = $(".story_dialog");
 			DIALOG.html('<img class="loading" src="../images/loading.gif"/>');
 			DIALOG.dialog({
@@ -160,7 +160,7 @@
 			DIALOG.load("${pageContext.request.contextPath}/story/loadEditStory.action?storyId="+ storyId,function(){DIALOG.css('background','none') ;});
 		});
 		
-		$(".deleteStory").live('click',function(){
+		$(".deleteStory").on('click',function(){
 			 var storyId=$(this).attr("id");
 			 DIALOG = $(".delete_dialog");
 			 DIALOG.dialog({autoOpen: false, 
@@ -235,7 +235,7 @@
 		$(".ui-dialog-titlebar img").css("height","17px");
 		$(".ui-dialog-titlebar img").css("width","17px");
 		$(".ui-dialog-titlebar img").css("cursor","pointer");
-		$(".ui-dialog-titlebar img").live('click',function(){
+		$(".ui-dialog-titlebar img").on('click',function(){
 			DIALOG.dialog('close');
 		});
 	}

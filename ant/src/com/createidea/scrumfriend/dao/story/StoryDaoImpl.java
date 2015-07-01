@@ -74,7 +74,8 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	@Override
 	public String createStory(StoryTo story) {
 		// TODO Auto-generated method stub
-		return (String)this.sessionFactory.getCurrentSession().save(story);
+		this.sessionFactory.getCurrentSession().save(story);
+		return null;
 	}
 
 	@Override
@@ -125,7 +126,11 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	}
 	
 	public float calculateStoryPoint(final String sql) {
-		return (float)this.sessionFactory.getCurrentSession().createQuery(sql).uniqueResult();
+		float count=0;
+		Object countObj=this.sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
+		if(countObj!=null)
+			count=(Float)countObj;
+		return count;
 	}
 
 	@Override
