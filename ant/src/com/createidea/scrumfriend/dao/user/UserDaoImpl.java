@@ -17,7 +17,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public UserTo getUserByName(String name) {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserTo.class);
 		criteria.add(Restrictions.eq("name", name ));
 		UserTo user=null;
@@ -30,7 +30,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public UserTo createUser(String username, String password, String email) {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = this.sessionFactory.getCurrentSession();
 		UserTo user=new UserTo();
 		user.setEmail(email);
 		user.setName(username);
@@ -52,7 +52,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public UserTo getRandomUser() {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserTo.class);		
 	    List<UserTo> userList=(List<UserTo>)criteria.list();
 	    return userList.get(0);
@@ -61,7 +61,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public void saveOrUpdateUser(UserTo user) {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.save(user);
 	}
 
@@ -69,13 +69,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	public UserTo getUserById(String userId) {
 		// TODO Auto-generated method stub
 		
-		Session session = sessionFactory.openSession();
-		Transaction tx=session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserTo.class);
 		criteria.add(Restrictions.eq("id", userId ));		
 		UserTo user=null;
 	    Object userObj= criteria.uniqueResult();
-	    tx.commit();
 	    if(userObj !=null)
 	    	user=(UserTo)userObj;
 	    return user;
@@ -108,7 +106,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public List<UserTo> getAllUsers() {
 		// TODO Auto-generated method stub
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(UserTo.class);
 		return criteria.list();
 	}
