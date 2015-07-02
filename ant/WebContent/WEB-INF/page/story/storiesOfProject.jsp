@@ -46,8 +46,8 @@
     background:red;
   }
   .brick.large {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     background:green;
   }
 </style>
@@ -99,19 +99,39 @@
 			 var draggingCardId=$(".dragging").attr("id");
 			 $("#draggingCardId").val(draggingCardId);
 			};
+			
 			var reordered = function($elements) {
 			  // Called after the drag and drop ends with the elements in their ending position.
 			  var draggedCardId=$("#draggingCardId").val();
 			  var draggedCardIndex;
+			  var beforeGraggingStoryId;
 			 for(var i=0;i<$elements.length; i++)
 				 {
 				 if($elements[i].id==draggedCardId)
 					 draggedCardIndex=i;
 				 }
-			 alert($("#"+$elements[draggedCardIndex+1].id).children("h2").text());
-			 alert($("#"+$elements[draggedCardIndex-1].id).children("h2").text());
-			  
+			 if(draggedCardIndex!=0)
+				 beforeGraggingStoryId=$elements[draggedCardIndex-1].id;
+				 
+			 $.ajax({
+				  "url":"${pageContext.request.contextPath }/story/changePriority.action",
+				  "type":"post",
+				  "data":{projectId:$("#projectId").val(),
+					      draggingStoryId: $("#draggingCardId").val(), 
+					      beforeGraggingStoryId:beforeGraggingStoryId,
+					      afterGraggingStoryId:$elements[draggedCardIndex+1].id},
+				  "success":function(data,status){
+					  if(data){
+						  
+					  }
+				},
+				"error":function(xhr,s1,s2){
+					alert('系统出错');
+				}
+			});
+						  
 			};
+			
 		$(".storieslist").gridly({
 		    base: 60, // px 
 		    gutter: 20, // px

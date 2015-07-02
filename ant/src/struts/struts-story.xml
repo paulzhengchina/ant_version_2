@@ -31,7 +31,14 @@
 			<result name="success" type="redirect">/story/viewStoriesOfProject.action?projectId=${projectId}</result>
 		</action>
 		
-	
+		<action name="changePriority" class="storyAction" method="updatePriority">
+			<result  type="json">
+			   <param name="includeProperties">
+			        storyStatus	                                               
+	           </param>
+			</result>	
+		</action>
+			
 		<action name="viewStoriesOfProject" class="storyAction" method="viewStoriesOfProject">
 			<result name="success">/WEB-INF/page/story/storiesOfProject.jsp</result>
 		</action>

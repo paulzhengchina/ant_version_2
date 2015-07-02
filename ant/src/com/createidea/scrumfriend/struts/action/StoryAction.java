@@ -25,6 +25,9 @@ public class StoryAction extends BaseAction {
 	private SprintTo currentSprint;
 	private ProjectTo project;
 	private ProjectService projectService;
+	private String draggingStoryId;
+	private String beforeGraggingStoryId;
+	private String afterGraggingStoryId;
 	
 	public String loadCreateStory(){
 		return SUCCESS;
@@ -73,6 +76,11 @@ public class StoryAction extends BaseAction {
 	
 	public String updateStoryStatus(){
 		storyService.updateStoryStatus(storyId,Integer.parseInt(storyStatus));
+		return SUCCESS;
+	}
+	
+	public String updatePriority(){
+		storyService.updatePriority(projectId,draggingStoryId,beforeGraggingStoryId,afterGraggingStoryId);
 		return SUCCESS;
 	}
 	/*
@@ -168,6 +176,30 @@ public class StoryAction extends BaseAction {
 
 	public void setProjectService(ProjectService projectService) {
 		this.projectService = projectService;
+	}
+
+	public String getDraggingStoryId() {
+		return draggingStoryId;
+	}
+
+	public void setDraggingStoryId(String draggingStoryId) {
+		this.draggingStoryId = draggingStoryId;
+	}
+
+	public String getBeforeGraggingStoryId() {
+		return beforeGraggingStoryId;
+	}
+
+	public void setBeforeGraggingStoryId(String beforeGraggingStoryId) {
+		this.beforeGraggingStoryId = beforeGraggingStoryId;
+	}
+
+	public String getAfterGraggingStoryId() {
+		return afterGraggingStoryId;
+	}
+
+	public void setAfterGraggingStoryId(String afterGraggingStoryId) {
+		this.afterGraggingStoryId = afterGraggingStoryId;
 	}
 	
 	

@@ -27,5 +27,7 @@ public interface StoryService {
 
 	public List<StoryTo> getStoriesForKanban(String sprintId);
 
+	public void updatePriority(String projectId,String draggingStoryId,String beforeGraggingStoryId, String afterGraggingStoryId);
+
 	
 }

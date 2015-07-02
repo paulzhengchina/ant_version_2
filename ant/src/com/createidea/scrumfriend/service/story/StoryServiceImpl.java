@@ -48,6 +48,7 @@ public class StoryServiceImpl implements StoryService {
 	@Override
 	public StoryTo createStory(StoryTo story,String projectId) {
 		story.setStatus(0);
+		story.setPriorityNum(storyDao.getMaxPriorityNum(projectId)+1);
 		if(projectId!=null)
 			story.setProject(new ProjectTo(projectId));
 		String storyId =storyDao.createStory(story);
@@ -103,6 +104,28 @@ public class StoryServiceImpl implements StoryService {
 	public float calculateStoryPoints(ProjectTo project, int status,int priority) {
 		// TODO Auto-generated method stub
 		return storyDao.calculateStoryPoints(project.getId(), status, priority);
+	}
+
+	@Override
+	public void updatePriority(String projectId, String draggingStoryId,String beforeGraggingStoryId, String afterGraggingStoryId) {
+		// TODO Auto-generated method stub
+		StoryTo draggingStoryTo=storyDao.getStoryById(draggingStoryId);
+		StoryTo afterGraggingStory=storyDao.getStoryById(afterGraggingStoryId);
+		
+		if(beforeGraggingStoryId==null)
+		{
+			draggingStoryTo.setPriorityNum(afterGraggingStory.getPriorityNum()+1);
+			storyDao.updateStory(draggingStoryTo);
+			return;
+		}
+		
+		StoryTo beforeGraggingStory=storyDao.getStoryById(beforeGraggingStoryId);		
+		String updateOtherStoryPrioritySql="update story set priority_num=(priority_num+1) where project_id='"+projectId+"' and priority_num>='"+beforeGraggingStory.getPriorityNum()+"'";
+		storyDao.updatePriority(updateOtherStoryPrioritySql);
+		
+		draggingStoryTo.setPriorityNum(beforeGraggingStory.getPriorityNum());
+		storyDao.updateStory(draggingStoryTo);
+		
 	}
 
 

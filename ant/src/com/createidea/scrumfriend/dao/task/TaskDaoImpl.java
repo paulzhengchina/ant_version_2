@@ -1,25 +1,14 @@
 package com.createidea.scrumfriend.dao.task;
 
-import java.sql.SQLException;
+import java.math.BigDecimal;
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.FloatType;
-import org.springframework.orm.hibernate4.HibernateCallback;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
-import com.createidea.scrumfriend.to.BlogTo;
 import com.createidea.scrumfriend.to.SprintTo;
-import com.createidea.scrumfriend.to.StatisticsSprintTo;
-import com.createidea.scrumfriend.to.StoryTo;
 import com.createidea.scrumfriend.to.TaskTo;
-import com.createidea.scrumfriend.to.UserTo;
 
 public class TaskDaoImpl extends BaseDaoImpl implements  TaskDao {
 
@@ -41,7 +30,7 @@ public class TaskDaoImpl extends BaseDaoImpl implements  TaskDao {
 		float count=0;
 		Object countObj=this.sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
 		if(countObj!=null)
-			count=(Float)countObj;
+			count=((BigDecimal)countObj).floatValue();
 		return count;
 	}
 	

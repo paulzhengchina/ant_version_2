@@ -1,22 +1,14 @@
 package com.createidea.scrumfriend.dao.story;
 
-import java.sql.SQLException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.FloatType;
 import org.springframework.dao.DataAccessException;
-import org.springframework.orm.hibernate4.HibernateCallback;
 
 import com.createidea.scrumfriend.dao.BaseDaoImpl;
-import com.createidea.scrumfriend.to.ImpedimentTo;
 import com.createidea.scrumfriend.to.ProjectTo;
 import com.createidea.scrumfriend.to.StoryTo;
 
@@ -59,9 +51,7 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
 		criteria.add(Restrictions.eq("project.id", projectId));
 		criteria.add(Restrictions.in("status", statusList));
-		criteria.addOrder(Order.asc("priorityNum"));
-		criteria.addOrder(Order.asc("priority"));
-		criteria.addOrder(Order.desc("businessValue"));
+		criteria.addOrder(Order.desc("priorityNum"));
 		try {
 			return (List<StoryTo>)criteria.list();
 		} catch (DataAccessException e) {
@@ -84,7 +74,7 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
 		criteria.add(Restrictions.eq("project.id", projectId));
 		criteria.add(Restrictions.eq("status", status));
-		criteria.addOrder(Order.desc("priority"));
+		criteria.addOrder(Order.desc("priorityNum"));
 		return (List<StoryTo>)criteria.list();
 		
 	}
@@ -129,7 +119,7 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		float count=0;
 		Object countObj=this.sessionFactory.getCurrentSession().createSQLQuery(sql).uniqueResult();
 		if(countObj!=null)
-			count=(Float)countObj;
+			count=((BigDecimal)countObj).floatValue();
 		return count;
 	}
 
@@ -139,7 +129,7 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
 		criteria.add(Restrictions.eq("sprint.id", sprintId));
 		criteria.add(Restrictions.eq("status", status));
-		criteria.addOrder(Order.desc("priority"));
+		criteria.addOrder(Order.desc("priorityNum"));
 		return (List<StoryTo>)criteria.list();
 	}
 
@@ -167,6 +157,20 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		String sqlString="select sum(point) as point from story where status='"+status+ "' and project_id='"+projectId+"' and priority='"+priority+"'" ;
 		return calculateStoryPoint(sqlString);
 	}
-
 	
+	@Override
+	public void updatePriority(String sql){
+		this.sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	@Override
+	public int getMaxPriorityNum(String projectId) {
+		// TODO Auto-generated method stub
+		int maxPriorityNum=0;
+		String sqlString="select max(priority_num) from story where project_id='"+projectId+"'";
+		Object countObj=this.sessionFactory.getCurrentSession().createSQLQuery(sqlString).uniqueResult();
+		if(countObj!=null)
+			maxPriorityNum=(Integer)countObj;
+		return maxPriorityNum;
+	}
 }

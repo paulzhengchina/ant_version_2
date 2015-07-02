@@ -40,5 +40,7 @@ public interface StoryDao {
 	
 	public float calculateStoryPoints(String projectId, int status,int priority);
 
-
+    public void updatePriority(String sql);
+    
+    public int getMaxPriorityNum(String projectId);
 }
