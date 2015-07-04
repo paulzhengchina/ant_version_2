@@ -40,16 +40,10 @@
   .storieslist {
     position: relative;
   }
-  .brick.small {
-    width: 140px;
-    height: 140px;
-    background:red;
+  .brick {
+    
   }
-  .brick.large {
-    width: 200px;
-    height: 200px;
-    background:green;
-  }
+  
 </style>
 </head>
 <body>
@@ -69,7 +63,7 @@
 			  
 			  <s:iterator value="%{stories}" var="story">
 			   
-			   <div class="story_card brick large" id='<s:property value="%{#story.id}"/>'>
+			   <div class="story_card brick priority<s:property value='%{#story.priority}'/>" id='<s:property value="%{#story.id}"/>'>
 				  <h2><s:property value="%{#story.name}"/></h2>
 				  <p class="value" title="商业价值"><s:property value="%{#story.businessValue}"/></p>
 				  <p class="accepetance_criteria"><s:property value="%{#story.dod}" escape="false"/></p>
@@ -93,7 +87,9 @@
 </body>
 <script>
 	$(document).ready(function() {
-		
+		   
+		  alert($(window).width());
+		  
 		   var reordering = function($elements) {
 			  // Called before the drag and drop starts with the elements in their starting position.
 			 var draggingCardId=$(".dragging").attr("id");
@@ -105,6 +101,7 @@
 			  var draggedCardId=$("#draggingCardId").val();
 			  var draggedCardIndex;
 			  var beforeGraggingStoryId;
+			  var afterGraggingStoryId;
 			 for(var i=0;i<$elements.length; i++)
 				 {
 				 if($elements[i].id==draggedCardId)
@@ -112,6 +109,10 @@
 				 }
 			 if(draggedCardIndex!=0)
 				 beforeGraggingStoryId=$elements[draggedCardIndex-1].id;
+			 
+			 if(draggedCardIndex != $elements.length-1)
+				 afterGraggingStoryId=$elements[draggedCardIndex+1].id;
+			 
 				 
 			 $.ajax({
 				  "url":"${pageContext.request.contextPath }/story/changePriority.action",
@@ -119,7 +120,7 @@
 				  "data":{projectId:$("#projectId").val(),
 					      draggingStoryId: $("#draggingCardId").val(), 
 					      beforeGraggingStoryId:beforeGraggingStoryId,
-					      afterGraggingStoryId:$elements[draggedCardIndex+1].id},
+					      afterGraggingStoryId:afterGraggingStoryId},
 				  "success":function(data,status){
 					  if(data){
 						  
@@ -133,11 +134,13 @@
 			};
 			
 		$(".storieslist").gridly({
+			
 		    base: 60, // px 
 		    gutter: 20, // px
-		    columns: 12,
+		    columns: 24,
 		    callbacks: { reordering: reordering , reordered: reordered }
 		  });
+		
 		$(".create_item").click(function(){
 			DIALOG = $(".story_dialog");
 			DIALOG.dialog({

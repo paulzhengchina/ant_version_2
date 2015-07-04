@@ -950,14 +950,14 @@ table.story td{
 }
 .story_card{
 	width:260px;
-	height:400px;
+	height:360px;
 	position:relative;
 	cursor:pointer;
 	text-overflow:ellipsis;
 	overflow-y:hidden;
 	overflow-x:hidden;
 	float:left;
-	margin-right:14px;
+	margin-right:10px;
 	margin-top:20px;
 	padding-left:10px;
 	padding-right:10px;
@@ -1048,6 +1048,22 @@ table.story td{
 .story_card .point_priority{
 	width:25%;
 	font-size:20px;
+}
+
+.story_card.priority0{
+	background:#8e44ad;
+}
+
+.story_card.priority1{
+	background:#e74c3c;
+}
+
+.story_card.priority2{
+	background:#f1c40f;
+}
+
+.story_card.priority3{
+	background:#2ecc71;
 }
 
 .story_card .necessary0{
