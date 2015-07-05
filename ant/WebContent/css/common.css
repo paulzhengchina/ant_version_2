@@ -989,7 +989,9 @@ table.story td{
 	text-align:left;	
 }
 
-
+.story_card .title{
+	font-size:15px;
+}
 
 .story_card ol{
 	font-size:14px;
@@ -1007,11 +1009,12 @@ table.story td{
 	overflow-y:scroll;
 	height:260px;
 	margin-top:10px;
+	font-size:13px;
 }
 
 .story_card .value{
 	position:absolute;
-	top: 370px;
+	top: 330px;
 	left:90px;
 	width:80px;
 	text-align:center;
@@ -1025,7 +1028,7 @@ table.story td{
 
 .story_card .point{
 	position:absolute;
-	top: 370px;
+	top: 330px;
 	left:10px;
 	width:80px;
 	text-align:center;
@@ -1036,7 +1039,7 @@ table.story td{
 
 .story_card .priorityNum{
 	position:absolute;
-	top: 370px;
+	top: 330px;
 	left:180px;
 	width:80px;
 	text-align:center;

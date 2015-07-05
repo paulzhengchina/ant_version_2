@@ -54,7 +54,20 @@
 				<s:property value="%{project.name}" />
 			</p>
 			<p class="page_info">需求库</p>
-			<p class="create_item">+创建需求</p>
+			<select name="filter" multiple="multiple" style="width:300px">
+				<optgroup label="优先级">
+					<option value="priority0" selected="selected">必须有</option>
+					<option value="priority1" selected="selected">应该有</option>
+					<option value="priority2" selected="selected">可以有</option>
+					<option value="priority3" selected="selected">不会有（但想）</option>
+			    </optgroup>
+				<optgroup label="状态">
+					<option value="status0" selected="selected">等待</option>
+					<option value="status1">完成</option>
+					<option value="status2">移除</option>
+				</optgroup>
+	      </select>
+		  <p class="create_item">+创建需求</p>
 	</div>
 	<div class="project_stories" id='project_stories' style="position: relative;">
 			<s:hidden name="projectId" value="%{projectId}" />
@@ -64,7 +77,7 @@
 			  <s:iterator value="%{stories}" var="story">
 			   
 			   <div class="story_card brick priority<s:property value='%{#story.priority}'/>" id='<s:property value="%{#story.id}"/>'>
-				  <h2><s:property value="%{#story.name}"/></h2>
+				  <p class="title"><s:property value="%{#story.name}"/></p>
 				  <p class="value" title="商业价值"><s:property value="%{#story.businessValue}"/></p>
 				  <p class="accepetance_criteria"><s:property value="%{#story.dod}" escape="false"/></p>
 				  <p class="point" title="工作量"><s:property value="%{#story.point}"/></p>
@@ -88,7 +101,8 @@
 <script>
 	$(document).ready(function() {
 		   
-		  alert($(window).width());
+        		
+		var allStoryCards=$(".story_card");
 		  
 		   var reordering = function($elements) {
 			  // Called before the drag and drop starts with the elements in their starting position.
@@ -132,12 +146,23 @@
 			});
 						  
 			};
+		
+			var windowWidth=$(window).width();
+			var columns=12;
+			if(windowWidth<=960)
+				columns=12;
+			if(windowWidth>960 && windowWidth<=1366)
+				columns=16;
+			if(windowWidth>1366 && windowWidth<=1666)
+				columns=20;
+			if(windowWidth>1666)
+				columns=24;
 			
 		$(".storieslist").gridly({
 			
 		    base: 60, // px 
-		    gutter: 20, // px
-		    columns: 24,
+		    gutter: 15, // px
+		    columns: columns,
 		    callbacks: { reordering: reordering , reordered: reordered }
 		  });
 		
@@ -222,7 +247,7 @@
 		$("select").multiselect({
 			 selectedList: 5,
 			 close: function(){
-				 if ($('input[name=filter[]]:checked').length < 1) {  
+				 if ($('input[@name="filter"]:checked').length < 1) {  
 					     
 					   }  
 				 else {  
@@ -230,7 +255,14 @@
 					    $('input[name=filter[]]:not(:checked)').each(function() {
 					    	$("."+$(this).val()).remove();
 					    });
-					    wall.refresh($(window).width() -100, $(window).height() - 30);
+					    
+					    $(".storieslist").gridly({
+							
+						    base: 60, // px  
+						    gutter: 15, // px
+						    columns: columns,
+						    callbacks: { reordering: reordering , reordered: reordered }
+						  });
 					   }   
 			   },
 			  beforeclose: function(){
@@ -238,7 +270,14 @@
 				  if(allStoryCards){
 					  allStoryCards.each(function() {
 					  $("#storieslist").append($(this));
-					  wall.refresh($(window).width() -100, $(window).height() - 30);
+					  
+					  $(".storieslist").gridly({
+							
+						    base: 60, // px 
+						    gutter: 15, // px
+						    columns: columns,
+						    callbacks: { reordering: reordering , reordered: reordered }
+						  });
 					    });
 				  }
 			}

@@ -22,7 +22,7 @@ public class ProjectDaoImpl extends BaseDaoImpl implements  ProjectDao {
 	@Override
 	public void saveProject(ProjectTo project) {
 		// TODO Auto-generated method stub
-		this.sessionFactory.getCurrentSession().save(project);
+		this.sessionFactory.getCurrentSession().saveOrUpdate(project);
 	}
 
 	@Override
