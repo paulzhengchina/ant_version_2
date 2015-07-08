@@ -6,39 +6,23 @@
 <title>需求库-<s:property value="project.name" /></title>
 <LINK rel="Shortcut Icon" href="${pageContext.request.contextPath}/images/icon/shortcut.png" />
 <link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/common.css">
+<link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${ pageContext.request.contextPath }/css/icheck_flat/grey.css">
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/jquery-ui.css" />
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/css/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/jquery.gridly.css" />
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery.gridly.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/freewall.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/scrum-shrink.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.multiselect.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.multiselect.zh-cn.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/icheck.min.js"></script>
 
-<script>
-	function calculateStoryCardSize(point){
-		if(!point||point==0)
-			return 1;
-		else if(point==1)
-			return 1;
-		else if(point>1 && point<=3)
-			return 2;
-		else if(point>3 && point <=6)
-			return 3;
-		else if(point>6 && point<=13)
-			return 4;
-		else 
-			return 5;
-		
-	}
-	
-</script>
 
 <style type="text/css">
   .storieslist {
     position: relative;
+    margin-left:20px;
   }
   .brick {
     
@@ -50,28 +34,47 @@
 
 <div class="content">
     <div class="header">
+            <img class="logo" src="${pageContext.request.contextPath}/images/head_logo.png"/>
 			<p class="project_name">
 				<s:property value="%{project.name}" />
 			</p>
 			<p class="page_info">需求库</p>
-			<select name="filter" multiple="multiple" style="width:300px">
-				<optgroup label="优先级">
-					<option value="priority0" selected="selected">必须有</option>
-					<option value="priority1" selected="selected">应该有</option>
-					<option value="priority2" selected="selected">可以有</option>
-					<option value="priority3" selected="selected">不会有（但想）</option>
-			    </optgroup>
-				<optgroup label="状态">
-					<option value="status0" selected="selected">等待</option>
-					<option value="status1">完成</option>
-					<option value="status2">移除</option>
-				</optgroup>
-	      </select>
-		  <p class="create_item">+创建需求</p>
+			<p class="create_item">+创建需求</p>
 	</div>
 	<div class="project_stories" id='project_stories' style="position: relative;">
+	       
 			<s:hidden name="projectId" value="%{projectId}" />
 			<s:hidden name="draggingCardId" value="" />
+			
+			<div class="filter">
+				<div class="priority text-left">
+				   
+					<label class="checkbox-inline"> <input type="checkbox" checked
+						id="priority0" value="0"> <span class="priority0 filter_option">必须有</span>
+					</label> 
+					<label class="checkbox-inline"> <input type="checkbox" checked
+						id="priority1" value="1"> <span class="priority1 filter_option">应该有</span>
+					</label> 
+					<label class="checkbox-inline"> <input type="checkbox" checked
+						id="priority2" value="2"> <span class="priority2 filter_option">可以有</span>
+					</label>
+					<label class="checkbox-inline"> <input type="checkbox" 
+						id="priority3" value="3"> <span class="priority3 filter_option">可以没有</span>
+					</label>
+				    
+					<label class="checkbox-inline"> <input type="checkbox"
+						id="status0" value="0"> <span class="filter_option">等待</span>
+					</label> 
+					<label class="checkbox-inline"> <input type="checkbox"
+						id="status1" value="1"> <span class="filter_option">完成</span>
+					</label> 
+					<label class="checkbox-inline"> <input type="checkbox"
+						id="status2" value="2"> <span class="filter_option">删除</span>
+					</label>
+					&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success btn-xs">筛选</button>
+				</div>
+			</div>
+			
 			<div class="storieslist">
 			  
 			  <s:iterator value="%{stories}" var="story">
@@ -102,16 +105,15 @@
 	$(document).ready(function() {
 		   
         		
-		var allStoryCards=$(".story_card");
+		   var allStoryCards=$(".story_card");
 		  
-		   var reordering = function($elements) {
-			  // Called before the drag and drop starts with the elements in their starting position.
+		   //draging start		   
+		   var reordering = function($elements) {	
 			 var draggingCardId=$(".dragging").attr("id");
 			 $("#draggingCardId").val(draggingCardId);
 			};
 			
 			var reordered = function($elements) {
-			  // Called after the drag and drop ends with the elements in their ending position.
 			  var draggedCardId=$("#draggingCardId").val();
 			  var draggedCardIndex;
 			  var beforeGraggingStoryId;
@@ -164,6 +166,11 @@
 		    gutter: 15, // px
 		    columns: columns,
 		    callbacks: { reordering: reordering , reordered: reordered }
+		  });		
+		//dragging-stop
+		
+		$('input').iCheck({
+			checkboxClass: 'icheckbox_flat-grey'
 		  });
 		
 		$(".create_item").click(function(){
@@ -240,50 +247,9 @@
 			   DIALOG.dialog("open");
 			   customizeDialog();
 			   
+		   });		
 		});
-		
-		
-		var allDetachedStoryCards;
-		$("select").multiselect({
-			 selectedList: 5,
-			 close: function(){
-				 if ($('input[@name="filter"]:checked').length < 1) {  
-					     
-					   }  
-				 else {  
-					    allDetachedStoryCards=$('input[name=filter[]]:not(:checked)');  
-					    $('input[name=filter[]]:not(:checked)').each(function() {
-					    	$("."+$(this).val()).remove();
-					    });
-					    
-					    $(".storieslist").gridly({
-							
-						    base: 60, // px  
-						    gutter: 15, // px
-						    columns: columns,
-						    callbacks: { reordering: reordering , reordered: reordered }
-						  });
-					   }   
-			   },
-			  beforeclose: function(){
-				  $(".story_card").each(function(){$(this).remove()});
-				  if(allStoryCards){
-					  allStoryCards.each(function() {
-					  $("#storieslist").append($(this));
-					  
-					  $(".storieslist").gridly({
-							
-						    base: 60, // px 
-						    gutter: 15, // px
-						    columns: columns,
-						    callbacks: { reordering: reordering , reordered: reordered }
-						  });
-					    });
-				  }
-			}
-		});
-		
-		});
+	
 	function removeDeletedStoryCards(){
 		$(".status2").each(function(){$(this).remove()});
 		$(".status1").each(function(){$(this).remove()});
