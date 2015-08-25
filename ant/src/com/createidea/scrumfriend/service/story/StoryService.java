@@ -29,5 +29,7 @@ public interface StoryService {
 
 	public void updatePriority(String projectId,String draggingStoryId,String beforeGraggingStoryId, String afterGraggingStoryId);
 
+	public List<StoryTo> getFilteredStories(String projectId, String filterItems);
+
 	
 }

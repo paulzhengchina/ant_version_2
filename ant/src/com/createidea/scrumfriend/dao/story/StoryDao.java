@@ -1,5 +1,6 @@
 package com.createidea.scrumfriend.dao.story;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,4 +44,6 @@ public interface StoryDao {
     public void updatePriority(String sql);
     
     public int getMaxPriorityNum(String projectId);
+
+	public List<StoryTo> filterStrories(String projectId,ArrayList<Integer> priorities, ArrayList<Integer> statuses);
 }

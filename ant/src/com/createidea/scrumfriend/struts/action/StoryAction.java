@@ -28,6 +28,7 @@ public class StoryAction extends BaseAction {
 	private String draggingStoryId;
 	private String beforeGraggingStoryId;
 	private String afterGraggingStoryId;
+	private String filterItems;
 	
 	public String loadCreateStory(){
 		return SUCCESS;
@@ -40,12 +41,22 @@ public class StoryAction extends BaseAction {
 	}
 	
 	public String viewStoriesOfProject(){
+		
+		return SUCCESS;
+	}
+	
+	public String loadStoriesOfProject(){
 		stories=storyService.getActiveStoriesForProject(projectId);
 		if(stories!=null&&stories.size()>0)
 			project=stories.get(0).getProject();
 		else {
 			project=projectService.getProjectById(projectId);
 		}
+		return SUCCESS;
+	}
+	
+	public String filterStories(){
+		stories=storyService.getFilteredStories(projectId,filterItems);
 		return SUCCESS;
 	}
 	
@@ -200,6 +211,14 @@ public class StoryAction extends BaseAction {
 
 	public void setAfterGraggingStoryId(String afterGraggingStoryId) {
 		this.afterGraggingStoryId = afterGraggingStoryId;
+	}
+
+	public String getFilterItems() {
+		return filterItems;
+	}
+
+	public void setFilterItems(String filterItems) {
+		this.filterItems = filterItems;
 	}
 	
 	

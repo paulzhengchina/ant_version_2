@@ -1,5 +1,6 @@
 package com.createidea.scrumfriend.service.story;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.createidea.scrumfriend.dao.story.StoryDao;
@@ -126,6 +127,34 @@ public class StoryServiceImpl implements StoryService {
 		draggingStoryTo.setPriorityNum(beforeGraggingStory.getPriorityNum());
 		storyDao.updateStory(draggingStoryTo);
 		
+	}
+
+	@Override
+	public List<StoryTo> getFilteredStories(String projectId, String filterItems) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> priorities=new ArrayList<Integer>();
+		ArrayList<Integer> statuses=new ArrayList<Integer>();
+		if(filterItems.length()>2){
+			String[] filterItem=filterItems.split(",");
+			for(String item : filterItem){
+				if("priority0".equals(item))
+				  priorities.add(0);
+				if("priority1".equals(item))
+				  priorities.add(1);
+				if("priority2".equals(item))
+				  priorities.add(2);
+				if("priority3".equals(item))
+				  priorities.add(3);
+				if("status0".equals(item))
+				  statuses.add(0);
+				if("status1".equals(item))
+				  statuses.add(1);
+				if("status2".equals(item))
+				  statuses.add(2);			
+			}
+		}
+		
+	return storyDao.filterStrories(projectId,priorities,statuses);
 	}
 
 

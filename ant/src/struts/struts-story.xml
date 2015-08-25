@@ -40,6 +40,14 @@
 		</action>
 			
 		<action name="viewStoriesOfProject" class="storyAction" method="viewStoriesOfProject">
+			<result name="success">/WEB-INF/page/story/viewStoriesOfProject.jsp</result>
+		</action>
+		
+		<action name="loadStoriesOfProject" class="storyAction" method="loadStoriesOfProject">
+			<result name="success">/WEB-INF/page/story/storiesOfProject.jsp</result>
+		</action>
+		
+		<action name="filterStories" class="storyAction" method="filterStories">
 			<result name="success">/WEB-INF/page/story/storiesOfProject.jsp</result>
 		</action>
 		

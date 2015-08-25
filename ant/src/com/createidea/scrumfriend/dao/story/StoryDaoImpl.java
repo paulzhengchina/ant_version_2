@@ -44,10 +44,8 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 	@Override
 	public List<StoryTo> getActiveStoriesForProject(String projectId) {
 		// TODO Auto-generated method stub
-		ArrayList statusList=new ArrayList<Integer>();
+		ArrayList<Integer> statusList=new ArrayList<Integer>();
 		statusList.add(0);
-		statusList.add(1);
-		statusList.add(2);
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
 		criteria.add(Restrictions.eq("project.id", projectId));
 		criteria.add(Restrictions.in("status", statusList));
@@ -172,5 +170,23 @@ public class StoryDaoImpl extends BaseDaoImpl implements  StoryDao {
 		if(countObj!=null)
 			maxPriorityNum=(Integer)countObj;
 		return maxPriorityNum;
+	}
+
+	@Override
+	public List<StoryTo> filterStrories(String projectId, ArrayList<Integer> priorities, ArrayList<Integer> statuses) {
+		// TODO Auto-generated method stub
+		
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StoryTo.class);
+		criteria.add(Restrictions.eq("project.id", projectId));
+		criteria.add(Restrictions.in("status", statuses));
+		criteria.add(Restrictions.in("priority", priorities));
+		criteria.addOrder(Order.desc("priorityNum"));
+		try {
+			return (List<StoryTo>)criteria.list();
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
