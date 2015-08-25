@@ -317,7 +317,7 @@ form textarea{
 	padding:3px;
 	margin-top:7px;
 	font-size:12px;
-	height:90px;
+	height:160px;
 	color:#333333;
 	width:386px;
 }
@@ -1981,7 +1981,7 @@ table.story td{
 	margin-top:30%;
 }
 .story_dialog{
-	margin:12px 5px;
+	margin:12px 20px 12px 5px;
 }
 
 .sprint_dialog .loading{

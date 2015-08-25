@@ -36,8 +36,8 @@
 				autoOpen : false,
 				title : "编辑需求",
 				modal : true,
-				width : 600,
-				height : 670,
+				width : 640,
+				
 				close : function() {
 					
 				}

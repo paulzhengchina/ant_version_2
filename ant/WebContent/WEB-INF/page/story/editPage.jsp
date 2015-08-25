@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="${ pageContext.request.contextPath }/css/jquery-ui.css" />
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery.form.js"></script>
 
 
@@ -56,28 +56,28 @@
 
 <body>
 	<div class="createStoryPage">
-	<s:form name="updateStory" action="updateStory" method="POST" theme="simple" cssClass="form-inlinel">
+	<s:form name="updateStory" action="updateStory" method="POST" theme="simple" cssClass="form-horizontal">
 	
 		<s:hidden name="story.project.id" value="%{story.project.id}"/>
 		<s:hidden name="story.id" value="%{story.id}"/>	
 		<p class="title">编辑需求</p>
 
 	    <div class="form-group">
-	       <label  for="updateStory_story_name" class="col-sm-2">标题</label>
-	       <input type="text" placeholder="输入需求名称" cssClass="col-sm-10" id="updateStory_story_name" />
-          
+	       <label  for="updateStory_story_name" class="col-sm-2 ">标题</label>
+           <s:textfield name="story.name" placeholder="输入需求名称" cssClass="col-sm-10 " ></s:textfield>
         </div>
         
         <div class="form-group">
-	       <label  for="updateStory_story_businessValue" class="col-sm-2 control-label">价值</label>
+	       <label  for="updateStory_story_businessValue" class="col-sm-2">价值</label>
            <s:textfield name="story.businessValue" placeholder="0" cssClass="col-sm-4"></s:textfield>
            
-          
+           <label  for="updateStory_story_point" class="col-sm-2">工作量</label>
+           <s:textfield name="story.point" placeholder="0" cssClass="col-sm-4"></s:textfield>
         </div>
            
         <div class="form-group">
 	       <label  for="priority" class="col-sm-2">重要性</label>
-           <select name="story.priority"   css="col-sm-10">
+           <select name="story.priority"  id="priority" class="col-sm-4">
 		      <script>
 				var priority='<s:property value="story.priority"/>' ;
 				var selected=parseInt(priority);
@@ -89,7 +89,17 @@
 			  <option value="3" class="wont">不会有（但想）</option>
 			</select>
 			
-			
+			<label  for="status" class="col-sm-2">状态</label>
+            <select name="story.status" id="status" class="col-sm-4">
+			  <script>
+				 var status='<s:property value="story.status"/>' ;
+				 var selected=parseInt(status);
+				 $("#status option").eq(selected).attr('selected', 'true');
+			  </script>
+			  <option value="0">等待</option>
+			  <option value="1">完成</option>
+			  <option value="2">移除</option>
+		   </select>
         </div>
 
 		<div class="form-group">
@@ -126,13 +136,17 @@
 		</div>
 		
         <div class="form-group">
-	       <label  for="updateStory_story_dod" class="col-sm-3 control-label">验收条件</label>
-           <s:textarea name="story.dod" rows="12" cols="59" placeholder="验收条件" cssClass="col-sm-9 form-control"></s:textarea>
+	       <label  for="updateStory_story_dod" class="col-sm-2">验收条件</label>
+           <s:textarea name="story.dod" rows="50" cols="59" placeholder="验收条件" cssClass="col-sm-10"></s:textarea>
         </div>
         
-	    <button type="submit" class="submit btn-default">提交</button>
-
-		</s:form>
+        <div class="form-group">
+		    <div class="col-sm-offset-2">
+		      <button type="submit" class="submit btn-default">提交</button>
+		    </div>
+        </div>
+	   
+	</s:form>
 </div>
 </body>
 </html>
