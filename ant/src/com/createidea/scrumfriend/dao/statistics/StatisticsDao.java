@@ -15,7 +15,7 @@ public interface StatisticsDao {
 
 	void updateSprintStatistics(StatisticsSprintTo statistics);
 
-	List<StatisticsSprintTo> getSprintsStatisticsForProject(String projectId);
+	List<StatisticsSprintTo> getSprintsStatisticsForProject(String[] sprintIds);
 
 	StatisticsDateTo getStatisticsDateByDate(Date date);
 

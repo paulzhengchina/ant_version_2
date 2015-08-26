@@ -125,7 +125,16 @@ public class StatisticsServiceImpl implements StatisticsService {
 	public Map getDataForTeamVelocity(String projectId) {
 		// TODO Auto-generated method stub
 		HashMap dataMap=new HashMap<String,float[]>();
-	    List<StatisticsSprintTo> statistics=statisticsDao.getSprintsStatisticsForProject(projectId);
+		String[] sprintIds=null;
+		List<SprintTo> sprintsOfProject=sprintDao.getSprintForProject(projectId);
+		if(sprintsOfProject!=null&&sprintsOfProject.size()>0){
+			sprintIds=new String[sprintsOfProject.size()];
+			for(int i=0;i<sprintsOfProject.size();i++)
+			{
+				sprintIds[i]=sprintsOfProject.get(i).getId();
+			}
+		}
+	    List<StatisticsSprintTo> statistics=statisticsDao.getSprintsStatisticsForProject(sprintIds);
 	    int length=0;
 	    if(statistics!=null&& (length=statistics.size())>0){
 	    	float[] completedPointOfSprints=new float[length];

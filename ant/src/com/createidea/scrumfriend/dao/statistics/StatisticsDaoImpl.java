@@ -37,12 +37,11 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 	}
 
 	@Override
-	public List<StatisticsSprintTo> getSprintsStatisticsForProject(String projectId) {
+	public List<StatisticsSprintTo> getSprintsStatisticsForProject(String[] sprintIds) {
 		// TODO Auto-generated method stub
 		criteria=this.sessionFactory.getCurrentSession().createCriteria(StatisticsSprintTo.class);
-		criteria.add(Restrictions.eq("sprint.id", projectId));
-		criteria.list();
-		return null;
+		criteria.add(Restrictions.in("sprint.id", sprintIds));
+		return criteria.list();
 	}
 
 	@Override
