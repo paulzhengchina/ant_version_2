@@ -6,23 +6,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>创建需求</title>
-<link rel="Stylesheet" type="text/css" href="${ pageContext.request.contextPath }/jhtmlarea/style/jHtmlArea.css" />
-<script type="text/javascript" src="${ pageContext.request.contextPath }/jhtmlarea/scripts/jHtmlArea-0.7.5.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery.form.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/kindeditor-4.1.10/themes/default/default.css" />
+<script charset="utf-8" src="${ pageContext.request.contextPath }/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ pageContext.request.contextPath }/kindeditor-4.1.10/lang/zh_CN.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
- $("textarea").htmlarea({
-	 toolbar: [
-	           ["orderedList"],
-	           ["bold", "italic", "underline"],
-	           ["link", "unlink"]
-	          
-	       ]
-	   });
- $("iframe").height("190px");
- $("iframe").width("394px");
+	var editor = KindEditor.create('textarea[name="story.dod"]', {
+		width:'82%',
+		height:'200px',
+		allowPreviewEmoticons : false,
+		allowImageUpload : false,
+		items : [ 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor',
+					'bold', 'italic', 'underline', 'removeformat', '|',
+					'justifyleft', 'justifycenter', 'justifyright',
+					'insertorderedlist', 'insertunorderedlist', '|', 'emoticons','link' ]
+		});
 });
 </script>
 
@@ -33,70 +34,63 @@ $(document).ready(function() {
 	
 <body>
 	<div class="createStoryPage">
-	<s:form name="createStory" action="createStory" method="POST" theme="simple">
-	<s:hidden name="projectId" value="%{projectId}"/>
-	<p class="title">新增需求</p>
-				<table id="project_tb" >
-					<tr>
-					    <td class="row_name">
-                                                                                     名称:
-					    </td>
-						<td colspan="3">
-						  <s:textfield name="story.name" placeholder="输入需求名称" size="54" cssClass="name"></s:textfield>
-						</td>
-					</tr>
-					<tr>
-					    <td class="row_name">
-                                                                                   价值:
-					    </td>
-						<td>
-						  <s:textfield name="story.businessValue" placeholder="商业价值" value="0" cssClass="number"></s:textfield>
-						</td>
-						<td class="row_name">
-                                                                                   工作量:
-					    </td>
-						<td>
-						  <s:textfield name="story.point" placeholder="工作量" value="0" cssClass="number"></s:textfield>
-						</td>
-					</tr>
-					<tr>
-						<td class="row_name">
-	                                                                                  必要性:
-						</td>
-						<td>
-						  <select name="story.priority" class="short">
-						     <option value="0" class="must">必须有</option>
-						     <option value="1" class="should">应该有</option>
-						     <option value="2" class="could">可以有</option>
-						     <option value="3" class="wont">不会有（但想）</option>
-						  </select>
-						</td>
-						<td class="row_name">
-	                                                                                   优先级:
-						</td>
-						<td>
-						  <s:textfield name="story.priorityNum" placeholder="优先级：数字越小代表优先级越高" value="0" cssClass="number"></s:textfield>
-						</td>
-					</tr>
-					<tr>
-					    <td class="row_name">
-                                                                                    验收条件:
-					    </td>
-						<td colspan="3">
-						  <s:textarea name="story.dod" rows="12" cols="59" placeholder="验收条件"></s:textarea>
-						</td>
-					</tr>
-					
-					<tr>
-					    <td>
-					    </td>
-						<td>
-						<button class="submit">提交</button>
-						</td>
-					</tr>
-				</table>
+	<s:form name="createStory" action="createStory"  method="POST" theme="simple" cssClass="form-horizontal">
+	
+		<s:hidden name="projectId" value="%{projectId}"/>
+		<p class="title">创建需求</p>
 
-		</s:form>
+	    <div class="form-group">
+	       <label  for="createStory_story_name" class="col-sm-2 ">标题</label>
+           <s:textfield name="story.name" placeholder="输入需求名称" cssClass="col-sm-10 " ></s:textfield>
+        </div>
+        
+        <div class="form-group">
+	       <label  for="createStory_story_businessValue" class="col-sm-2">价值</label>
+           <s:textfield name="story.businessValue" placeholder="0" cssClass="col-sm-4"></s:textfield>
+           
+           <label  for="createStory_story_point" class="col-sm-2">工作量</label>
+           <s:textfield name="story.point" placeholder="0" cssClass="col-sm-4"></s:textfield>
+        </div>
+           
+        <div class="form-group">
+	       <label  for="priority" class="col-sm-2">重要性</label>
+           <select name="story.priority"  id="priority" class="col-sm-4">
+		      <script>
+				var priority='<s:property value="story.priority"/>' ;
+				var selected=parseInt(priority);
+				$("#priority option").eq(selected).attr('selected', 'true');
+			  </script>
+			  <option value="0" class="must">必须有</option>
+			  <option value="1" class="should">应该有</option>
+			  <option value="2" class="could">可以有</option>
+			  <option value="3" class="wont">不会有（但想）</option>
+			</select>
+			
+			<label  for="status" class="col-sm-2">状态</label>
+            <select name="story.status" id="status" class="col-sm-4">
+			  <script>
+				 var status='<s:property value="story.status"/>' ;
+				 var selected=parseInt(status);
+				 $("#status option").eq(selected).attr('selected', 'true');
+			  </script>
+			  <option value="0">等待</option>
+			  <option value="1">完成</option>
+			  <option value="2">移除</option>
+		   </select>
+        </div>
+
+        <div class="form-group">
+	       <label  for="createStory_story_dod" class="col-sm-2">验收条件</label>
+           <s:textarea name="story.dod"    placeholder="验收条件"></s:textarea>
+        </div>
+        
+        <div class="form-group">
+		    <div class="col-sm-offset-2">
+		      <button type="submit" class="submit btn-default">提交</button>
+		    </div>
+        </div>
+	   
+	</s:form>
 		</div>
 		<script type="text/javascript" >
 			$(function() {

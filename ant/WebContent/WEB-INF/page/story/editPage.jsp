@@ -10,47 +10,60 @@
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.validate.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery.form.js"></script>
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/kindeditor-4.1.10/themes/default/default.css" />
+<script charset="utf-8" src="${ pageContext.request.contextPath }/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ pageContext.request.contextPath }/kindeditor-4.1.10/lang/zh_CN.js"></script>
 
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				
-				$(".submit").click(function(){
-					 $("form").validate({
-							rules: {					
-								'story.name': {
-									required: true
-								},
-								'story.businessValue': {
-									digits:true
-								},
-								'story.point': {
-									digits:true
-								}
-							},
-							messages: {
-								'story.name': {
-									required: "请输入名称！"
-								},
-								'story.businessValue': {
-									digits:"请输入整数"
-								},
-								'story.point': {
-									digits:"请输入整数"
-								}
-							}
-						});
-					 if($("form").valid()){ 
-						 $(".submit").prop("disabled","disabled");
-						 $(".submit").css("background","gray");
-						 $("form").submit();
-						 }
-					 else{
-						 return false;
-					 }
-				});
+	var editor = KindEditor.create('textarea[name="story.dod"]', {
+	width:'82%',
+	height:'200px',
+	allowPreviewEmoticons : false,
+	allowImageUpload : false,
+	items : [ 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor',
+				'bold', 'italic', 'underline', 'removeformat', '|',
+				'justifyleft', 'justifycenter', 'justifyright',
+				'insertorderedlist', 'insertunorderedlist', '|', 'emoticons','link' ]
+	});
+
+	$(document).ready(function() {
+
+		$(".submit").click(function() {
+			$("form").validate({
+				rules : {
+					'story.name' : {
+						required : true
+					},
+					'story.businessValue' : {
+						digits : true
+					},
+					'story.point' : {
+						digits : true
+					}
+				},
+				messages : {
+					'story.name' : {
+						required : "请输入名称！"
+					},
+					'story.businessValue' : {
+						digits : "请输入整数"
+					},
+					'story.point' : {
+						digits : "请输入整数"
+					}
+				}
 			});
+			if ($("form").valid()) {
+				$(".submit").prop("disabled", "disabled");
+				$(".submit").css("background", "gray");
+				$("#updateStory_story_dod").val(editor.html());
+				$("form").submit();
+			} else {
+				return false;
+			}
+		});
+	});
 </script>
 </head>
 
@@ -137,7 +150,7 @@
 		
         <div class="form-group">
 	       <label  for="updateStory_story_dod" class="col-sm-2">验收条件</label>
-           <s:textarea name="story.dod" rows="50" cols="59" placeholder="验收条件" cssClass="col-sm-10"></s:textarea>
+           <s:textarea name="story.dod"    placeholder="验收条件"></s:textarea>
         </div>
         
         <div class="form-group">
@@ -149,4 +162,5 @@
 	</s:form>
 </div>
 </body>
+
 </html>

@@ -24,7 +24,7 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 	@Override
 	public List<StatisticsProjectTo> getProjectStatistics(String projectId) {
 		// TODO Auto-generated method stub
-		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StatisticsProjectTo.class);
 		criteria.add(Restrictions.eq("project.id", projectId));
 		criteria.addOrder(Order.asc("date"));
 		return (List<StatisticsProjectTo>)criteria.list();
@@ -39,9 +39,10 @@ public class StatisticsDaoImpl extends BaseDaoImpl implements StatisticsDao {
 	@Override
 	public List<StatisticsSprintTo> getSprintsStatisticsForProject(String projectId) {
 		// TODO Auto-generated method stub
-		criteria=this.sessionFactory.getCurrentSession().createCriteria(ProjectTo.class);
-		criteria.add(Restrictions.eq("sprint.project.id", projectId));
-		return criteria.list();
+		criteria=this.sessionFactory.getCurrentSession().createCriteria(StatisticsSprintTo.class);
+		criteria.add(Restrictions.eq("sprint.id", projectId));
+		criteria.list();
+		return null;
 	}
 
 	@Override

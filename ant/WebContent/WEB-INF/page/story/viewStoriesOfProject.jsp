@@ -13,11 +13,9 @@
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery.gridly.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/freewall.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/scrum-shrink.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/icheck.min.js"></script>
-
 
 <style type="text/css">
   .storieslist {
@@ -164,7 +162,8 @@
 				title : "添加需求",
 				modal : true,
 				width : 600,
-				height : 600,
+				resizable:false,
+				position : ["center",100],
 				close : function() {
 					
 				}
@@ -184,9 +183,10 @@
 			DIALOG.dialog({
 				autoOpen : false,
 				title : "编辑需求",
-				modal : true,
+				modal : true,			
 				width : 600,
-				height : 670,
+				resizable:false,
+				position : ["center",100],
 				close : function() {
 					
 				}
@@ -260,10 +260,10 @@
 			if(windowWidth<=960)
 				columns=12;
 			if(windowWidth>960 && windowWidth<=1366)
-				columns=16;
-			if(windowWidth>1366 && windowWidth<=1666)
+				columns=12;
+			if(windowWidth>1366 && windowWidth<=1700)
 				columns=20;
-			if(windowWidth>1666)
+			if(windowWidth>1700)
 				columns=24;
 	   }
 	
