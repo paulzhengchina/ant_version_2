@@ -15,24 +15,14 @@
 	src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/scrum-shrink.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.common.core.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.common.dynamic.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.common.tooltips.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.common.effects.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.line.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.common.key.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.pie.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/rgraph/RGraph.bar.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/js/jquery-ui.min.js"></script>
+<script src="${ pageContext.request.contextPath }/echarts/echarts.js"></script>
+
 
 <script>
+	
+	
 	$(document).ready(function() {
 		
 		$(".left_menu_wide").tooltip({
@@ -131,22 +121,54 @@
 			  "type":"post",
 			  "data":{userId:$(this).attr("id"),projectId:$("#projectId").val()},
 			  "success":function(data,status){
-				    var line = new RGraph.Line('cvs', data.totalPointOfPoject, data.remainingPointOfProject);
-			        line.Set('chart.curvy', true);
-			        line.Set('chart.curvy.tickmarks', true);
-			        line.Set('chart.curvy.tickmarks.fill', null);
-			        line.Set('chart.curvy.tickmarks.stroke', '#aaa');
-			        line.Set('chart.curvy.tickmarks.stroke.linewidth', 2);
-			        line.Set('chart.curvy.tickmarks.size', 1);
-			        line.Set('chart.linewidth', 1);
-			        line.Set('chart.hmargin', 5);
-			        line.Set('key', ['总工作量','剩余工作量']);
-		            line.Set('key.position', 'gutter');
-		            line.Set('key.interactive', true);
-			        line.Set('chart.labels', data.sprintsEndDate);
-			        line.Set('chart.tooltips',changeFloatArrayToStringArray(data.totalPointOfPoject),changeFloatArrayToStringArray(data.remainingPointOfProject));
-			        line.Set('chart.tickmarks', 'circle');
-			        RGraph.Effects.Line.jQuery.Trace(line);
+				  
+				  require.config({
+		              paths: {
+		                      echarts: '${ pageContext.request.contextPath }/echarts'
+		                     }
+		           });
+				   
+				   // 使用
+			        require(
+			            [
+			                'echarts',
+			                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+			            ],
+			            function (ec) {
+			                // 基于准备好的dom，初始化echarts图表
+			                var myChart = ec.init(document.getElementById('project_burndown')); 
+			                
+			                var option = {
+			                    tooltip: {
+			                        show: true
+			                    },
+			                    legend: {
+			                        data:['项目燃尽图']
+			                    },
+			                    xAxis : [
+			                        {
+			                            type : 'category',
+			                            data : data.sprintsEndDate
+			                        }
+			                    ],
+			                    yAxis : [
+			                        {
+			                            type : 'value'
+			                        }
+			                    ],
+			                    series : [
+			                        {
+			                            "name":"销量",
+			                            "type":"line",
+			                            "data": changeFloatArrayToStringArray(data.totalPointOfPoject)
+			                        }
+			                    ]
+			                };
+			        
+			                // 为echarts对象加载数据 
+			                myChart.setOption(option); 
+			            }
+			        );
 			},
 			"error":function(xhr,s1,s2){
 				alert('系统出错');
@@ -161,22 +183,7 @@
 			  "type":"post",
 			  "data":{userId:$(this).attr("id"),projectId:$("#projectId").val()},
 			  "success":function(data,status){
-				    var line = new RGraph.Line('velocity_cvs', data.completedPointOfSprint);
-			        line.Set('chart.curvy', true);
-			        line.Set('chart.curvy.tickmarks', true);
-			        line.Set('chart.curvy.tickmarks.fill', null);
-			        line.Set('chart.curvy.tickmarks.stroke', '#aaa');
-			        line.Set('chart.curvy.tickmarks.stroke.linewidth', 2);
-			        line.Set('chart.curvy.tickmarks.size', 1);
-			        line.Set('chart.linewidth', 1);
-			        line.Set('chart.hmargin', 5);
-			        line.Set('key', ['完成工作量']);
-		            line.Set('key.position', 'gutter');
-		            line.Set('key.interactive', true);
-			        line.Set('chart.labels', data.sprintsEndDate);
-			        line.Set('chart.tooltips',changeFloatArrayToStringArray(data.completedPointOfSprint));
-			        line.Set('chart.tickmarks', 'circle');
-			        RGraph.Effects.Line.jQuery.Trace(line);
+				    
 			},
 			"error":function(xhr,s1,s2){
 				alert('系统出错');
@@ -227,12 +234,7 @@
 		
 		prepareDatasForStoriesSummaryPie(datas,labels,colors,explodeds);
 		
-		 var pie = new RGraph.Pie('stories_summary_cvs', datas);
-	     pie.Set('chart.labels', labels);
-	     pie.Set('chart.colors',colors);
-	     pie.Set('chart.exploded', explodeds);
-	     pie.Set('chart.radius', 100);
-	     pie.Draw();		
+			
 	}
 	
 
@@ -323,13 +325,7 @@
 			  "type":"post",
 			  "data":{projectId:$("#projectId").val()},
 			  "success":function(data,status){
-				    var bar = new RGraph.Bar('impediments_summary_cvs', data.impedimentsSummary);
-		            bar.Set('colors', ['#CC1111', '#11CCCC', '#1111CC']); 
-		            bar.Set('labels.above', true);
-		            bar.Set('labels', ['等待', '解决中', '完成', '失败']);
-		            bar.Set('strokestyle', 'transparent');
-		            bar.Set('ymax', 30);
-		            bar.Draw();
+				    
 			},
 			"error":function(xhr,s1,s2){
 				alert('系统出错');
@@ -397,9 +393,8 @@
 					</tr>
 				</table>
 			</div>
-			<div class="project_burndown">
-			   <h1>项目燃尽图</h1>
-			   <canvas id="cvs" width="600px" height="300px">[No canvas support]</canvas>
+			<div class="project_burndown" style="width:700px" id="project_burndown">
+			   
 			</div>
 			<div class="clear"/>
 		</div>
