@@ -158,7 +158,7 @@
 			                    ],
 			                    series : [
 			                        {
-			                            "name":"销量",
+			                            "name":"存量需求点数",
 			                            "type":"line",
 			                            "data": changeFloatArrayToStringArray(data.totalPointOfPoject)
 			                        }
@@ -184,6 +184,54 @@
 			  "data":{userId:$(this).attr("id"),projectId:$("#projectId").val()},
 			  "success":function(data,status){
 				    
+				  require.config({
+		              paths: {
+		                      echarts: '${ pageContext.request.contextPath }/echarts'
+		                     }
+		           });
+				   
+				   // 使用
+			        require(
+			            [
+			                'echarts',
+			                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+			            ],
+			            function (ec) {
+			                // 基于准备好的dom，初始化echarts图表
+			                var myChart = ec.init(document.getElementById('velocity')); 
+			                
+			                var option = {
+			                    tooltip: {
+			                        show: true
+			                    },
+			                    legend: {
+			                        data:['项目燃尽图']
+			                    },
+			                    xAxis : [
+			                        {
+			                            type : 'category',
+			                            data : data.sprintsEndDate
+			                        }
+			                    ],
+			                    yAxis : [
+			                        {
+			                            type : 'value'
+			                        }
+			                    ],
+			                    series : [
+			                        {
+			                            "name":"完成需求点数",
+			                            "type":"line",
+			                            "data": changeFloatArrayToStringArray(data.completedPointOfSprint)
+			                        }
+			                    ]
+			                };
+			        
+			                // 为echarts对象加载数据 
+			                myChart.setOption(option); 
+			            }
+			        );
+				   
 			},
 			"error":function(xhr,s1,s2){
 				alert('系统出错');
@@ -433,9 +481,8 @@
 			       </tr>
 			    </table>
 			</div>
-			<div class="velocity">
-			   <h1>团队生产力</h1>
-			   <canvas id="velocity_cvs" width="600" height="300">[No canvas support]</canvas>
+			<div class="velocity" style="width:700px" id="velocity">
+			   
 			</div>
 		    <div class="addMemeberDialog dialog"/>
 		</div>
